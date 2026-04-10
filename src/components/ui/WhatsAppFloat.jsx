@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { MessageCircle, X, ChevronRight } from 'lucide-react';
 
 export default function WhatsAppFloat() {
@@ -25,6 +25,7 @@ export default function WhatsAppFloat() {
       >
         <button 
           onClick={() => setShowGreeting(false)}
+          aria-label="Dismiss WhatsApp greeting"
           className="absolute top-3 right-3 text-gray-300 hover:text-gray-500 transition-colors"
         >
           <X size={16} />
@@ -46,7 +47,7 @@ export default function WhatsAppFloat() {
           </div>
 
           <div className="flex flex-col pt-0.5">
-            <h4 className="text-[13px] font-black text-gray-900 leading-none mb-1 uppercase tracking-tight">John</h4>
+            <p className="text-[13px] font-black text-gray-900 leading-none mb-1 uppercase tracking-tight">John</p>
             <span className="text-[10px] font-bold text-[#25D366] uppercase tracking-wider mb-2">Replies in 2 mins</span>
             <p className="text-[13px] text-gray-600 leading-relaxed font-medium">
               "Need help with pricing or delivery? I'm online and ready to help!"

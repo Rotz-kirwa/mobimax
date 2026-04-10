@@ -14,6 +14,8 @@ export default function Cart() {
   if (cart.length === 0) {
     return (
       <div className="container mx-auto px-4 max-w-4xl py-32 text-center">
+        <title>Your Cart – MobiPlus</title>
+        <meta name="description" content="Review your MobiPlus cart and proceed to checkout. Secure M-Pesa payment, express delivery across Kenya." />
         <motion.div 
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -37,6 +39,8 @@ export default function Cart() {
 
   return (
     <div className="bg-gray-50 min-h-screen pb-24">
+      <title>Your Cart ({cart.length} {cart.length === 1 ? 'item' : 'items'}) – MobiPlus</title>
+      <meta name="description" content="Review your MobiPlus cart and proceed to checkout. Secure M-Pesa payment, express delivery across Kenya." />
       {/* Page Header */}
       <div className="bg-white border-b border-gray-100 py-10">
         <div className="container mx-auto px-4 max-w-7xl">
@@ -74,7 +78,7 @@ export default function Cart() {
                 >
                   {/* Image Container */}
                   <Link to={`/product/${item.id}`} className="w-full md:w-36 h-36 rounded-[28px] bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0 p-4 overflow-hidden relative">
-                    <img src={item.image} alt={item.name} className="w-full h-full object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-700" />
+                    <img src={item.image} alt={`${item.brand} ${item.name} – cart thumbnail`} className="w-full h-full object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-700" />
                   </Link>
     
                   {/* Detailed Info */}

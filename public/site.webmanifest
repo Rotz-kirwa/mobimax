@@ -1,0 +1,17 @@
+{
+  "name": "Mobimax",
+  "short_name": "Mobimax",
+  "description": "Premium electronics store for phones, laptops, audio, and accessories in Kenya.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07131F",
+  "theme_color": "#07131F",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "96x96",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

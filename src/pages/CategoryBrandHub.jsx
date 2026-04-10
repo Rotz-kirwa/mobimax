@@ -1,26 +1,22 @@
-import { useMemo } from 'react';
-import { useParams, Link, useSearchParams } from 'react-router-dom';
-import { ChevronRight, ArrowRight, Star, Zap, ShieldCheck, Award } from 'lucide-react';
-import { products, categories, brands as allBrands } from '../data/mockData';
+import { useParams, Link } from 'react-router-dom';
+import { ArrowRight, Zap, ShieldCheck, Award } from 'lucide-react';
 import ProductCard from '../components/ui/ProductCard';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
+import { useCatalogStore } from '../store/useCatalogStore';
 
 export default function CategoryBrandHub() {
   const { type, slug } = useParams(); // type can be 'category' or 'brand'
+  const products = useCatalogStore((state) => state.products);
   
   const isBrand = type === 'brand';
   const hubName = slug.charAt(0).toUpperCase() + slug.slice(1).replace('-', ' ');
 
-  const hubProducts = useMemo(() => {
-    if (isBrand) {
-      return products.filter(p => p.brand.toLowerCase() === slug.toLowerCase());
-    }
-    return products.filter(p => p.category.toLowerCase() === slug.toLowerCase());
-  }, [isBrand, slug]);
+  const hubProducts = isBrand
+    ? products.filter((product) => product.brand.toLowerCase() === slug.toLowerCase())
+    : products.filter((product) => product.category.toLowerCase() === slug.toLowerCase());
 
   const featured = hubProducts.filter(p => p.flags?.isFeatured || p.isNew).slice(0, 4);
-  const others = hubProducts.filter(p => !featured.find(f => f.id === p.id));
 
   // Visual Theme Data (Mocked for premium feel)
   const hubMeta = {
@@ -76,7 +72,7 @@ export default function CategoryBrandHub() {
                   View Full Catalog <ArrowRight size={14} />
                </Link>
             </div>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {featured.map(product => (
                 <ProductCard key={product.id} product={product} />
               ))}
@@ -116,7 +112,7 @@ export default function CategoryBrandHub() {
              <div className="w-16 h-1 bg-brand-green rounded-full"></div>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {hubProducts.map(product => (
               <ProductCard key={product.id} product={product} />
             ))}

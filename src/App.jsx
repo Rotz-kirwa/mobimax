@@ -1,24 +1,59 @@
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 import Header from './components/layout/Header';
 import AppFooter from './components/layout/AppFooter';
-import Home from './pages/Home';
-import Shop from './pages/Shop';
-import ProductDetails from './pages/ProductDetails';
-import Cart from './pages/Cart';
-import Checkout from './pages/Checkout';
-import CategoryBrandHub from './pages/CategoryBrandHub';
-import Wishlist from './pages/Wishlist';
-import Account from './pages/Account';
-import LegalPage from './pages/LegalPage';
-import NotFound from './pages/NotFound';
 import WhatsAppFloat from './components/ui/WhatsAppFloat';
+import AdminProtectedRoute from './components/auth/AdminProtectedRoute';
+
+const Home = lazy(() => import('./pages/Home'));
+const Shop = lazy(() => import('./pages/Shop'));
+const ProductDetails = lazy(() => import('./pages/ProductDetails'));
+const Cart = lazy(() => import('./pages/Cart'));
+const Checkout = lazy(() => import('./pages/Checkout'));
+const CategoryBrandHub = lazy(() => import('./pages/CategoryBrandHub'));
+const Wishlist = lazy(() => import('./pages/Wishlist'));
+const Account = lazy(() => import('./pages/Account'));
+const About = lazy(() => import('./pages/About'));
+const Contact = lazy(() => import('./pages/Contact'));
+const FAQ = lazy(() => import('./pages/FAQ'));
+const LegalPage = lazy(() => import('./pages/LegalPage'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+const Compare = lazy(() => import('./pages/Compare'));
+const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'));
+const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
+
+function PageLoader() {
+  return (
+    <div className="flex min-h-[40vh] items-center justify-center bg-gray-50 px-4 py-16">
+      <div className="w-full max-w-md rounded-[32px] border border-gray-100 bg-white p-10 text-center shadow-premium">
+        <p className="text-[10px] font-black uppercase tracking-[0.35em] text-brand-green">
+          Loading
+        </p>
+        <h2 className="mt-4 text-2xl font-black uppercase tracking-tight text-gray-900">
+          Preparing the next page
+        </h2>
+        <p className="mt-3 text-sm font-medium text-gray-500">
+          Pulling in the storefront view you requested.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function AppOutlet() {
+  return (
+    <Suspense fallback={<PageLoader />}>
+      <Outlet />
+    </Suspense>
+  );
+}
 
 function RootLayout() {
   return (
-    <div className="min-h-screen flex flex-col font-sans">
+    <div className="flex min-h-screen flex-col font-sans">
       <Header />
-      <main className="flex-1 bg-gray-50 relative pb-10">
-        <Outlet />
+      <main className="relative flex-1 bg-gray-50 pb-10">
+        <AppOutlet />
       </main>
       <AppFooter />
       <WhatsAppFloat />
@@ -35,6 +70,9 @@ function App() {
           <Route path="shop" element={<Shop />} />
           <Route path="deals" element={<Shop />} />
           <Route path="account" element={<Account />} />
+          <Route path="about" element={<About />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="faq" element={<FAQ />} />
           <Route path="wishlist" element={<Wishlist />} />
           <Route path="privacy" element={<LegalPage pageKey="privacy" />} />
           <Route path="terms" element={<LegalPage pageKey="terms" />} />
@@ -43,8 +81,27 @@ function App() {
           <Route path="product/:id" element={<ProductDetails />} />
           <Route path="cart" element={<Cart />} />
           <Route path="checkout" element={<Checkout />} />
+          <Route path="compare" element={<Compare />} />
           <Route path="*" element={<NotFound />} />
         </Route>
+        <Route
+          path="/admin/login"
+          element={
+            <Suspense fallback={<PageLoader />}>
+              <AdminLogin />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <AdminProtectedRoute>
+              <Suspense fallback={<PageLoader />}>
+                <AdminDashboard />
+              </Suspense>
+            </AdminProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

@@ -1,18 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, ChevronLeft, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { heroBanners } from '../../data/mockData';
+import { useCatalogStore } from '../../store/useCatalogStore';
 
 export default function HeroCarousel() {
+  const heroBanners = useCatalogStore((state) => state.heroBanners);
   const [current, setCurrent] = useState(0);
+  const activeIndex = heroBanners.length > 0 ? current % heroBanners.length : 0;
 
   useEffect(() => {
+    if (heroBanners.length === 0) {
+      return undefined;
+    }
+
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % heroBanners.length);
     }, 6000);
     return () => clearInterval(timer);
-  }, []);
+  }, [heroBanners.length]);
+
+  if (heroBanners.length === 0) {
+    return null;
+  }
 
   const next = () => setCurrent((prev) => (prev + 1) % heroBanners.length);
   const prev = () => setCurrent((prev) => (prev - 1 + heroBanners.length) % heroBanners.length);
@@ -21,7 +31,7 @@ export default function HeroCarousel() {
     <section className="relative w-full h-[400px] md:h-[600px] overflow-hidden bg-gray-900 group">
       <AnimatePresence mode="wait">
         <motion.div
-          key={current}
+          key={activeIndex}
           initial={{ opacity: 0, scale: 1.1 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
@@ -31,8 +41,8 @@ export default function HeroCarousel() {
           {/* Background Image */}
           <div className="absolute inset-0 z-0">
             <img 
-              src={heroBanners[current].bg} 
-              alt={heroBanners[current].title} 
+              src={heroBanners[activeIndex].bg} 
+              alt={heroBanners[activeIndex].title} 
               className="w-full h-full object-cover opacity-60"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent"></div>
@@ -46,16 +56,18 @@ export default function HeroCarousel() {
               transition={{ delay: 0.3, duration: 0.6 }}
               className="max-w-xl"
             >
-              <h4 className="text-brand-green font-black uppercase tracking-[0.4em] text-[10px] md:text-xs mb-4">Limited Edition Drop</h4>
+              <p className="text-brand-green font-black uppercase tracking-[0.4em] text-[10px] md:text-xs mb-4">
+                {heroBanners[activeIndex].eyebrow || 'Limited Edition Drop'}
+              </p>
               <h2 className="text-4xl md:text-7xl font-black leading-[1.1] mb-6 tracking-tighter">
-                {heroBanners[current].title}
+                {heroBanners[activeIndex].title}
               </h2>
               <p className="text-sm md:text-lg text-gray-300 font-medium mb-10 leading-relaxed max-w-sm">
-                {heroBanners[current].subtitle}
+                {heroBanners[activeIndex].subtitle}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link 
-                  to={heroBanners[current].link} 
+                  to={heroBanners[activeIndex].link} 
                   className="bg-brand-green text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-white hover:text-brand-green transition-all shadow-xl shadow-brand-green/20 flex items-center gap-2 group/btn"
                 >
                   Shop the Collection <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
@@ -75,12 +87,14 @@ export default function HeroCarousel() {
       {/* Navigation Controls */}
       <button 
         onClick={prev}
+        aria-label="Show previous hero banner"
         className="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/5 border border-white/10 backdrop-blur-md flex items-center justify-center text-white hover:bg-white hover:text-gray-900 transition-all opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0"
       >
         <ChevronLeft size={24} />
       </button>
       <button 
         onClick={next}
+        aria-label="Show next hero banner"
         className="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/5 border border-white/10 backdrop-blur-md flex items-center justify-center text-white hover:bg-white hover:text-gray-900 transition-all opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0"
       >
         <ChevronRight size={24} />
@@ -92,7 +106,8 @@ export default function HeroCarousel() {
           <button 
             key={idx}
             onClick={() => setCurrent(idx)}
-            className={`w-12 h-1 rounded-full transition-all duration-500 ${current === idx ? 'bg-brand-green' : 'bg-white/20'}`}
+            aria-label={`Go to hero banner ${idx + 1}`}
+            className={`w-12 h-1 rounded-full transition-all duration-500 ${activeIndex === idx ? 'bg-brand-green' : 'bg-white/20'}`}
           />
         ))}
       </div>

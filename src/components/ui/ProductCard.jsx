@@ -1,137 +1,160 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Eye, Heart, Star } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Heart, BarChart3 } from 'lucide-react';
 import clsx from 'clsx';
 import { useStore } from '../../store/useStore';
+import { getProductAvailability, PRODUCT_IMAGE_FALLBACK } from '../../lib/catalog';
 
 export default function ProductCard({ product }) {
-  const navigate = useNavigate();
-  const { addToCart, toggleWishlist, wishlist } = useStore();
+  const { toggleWishlist, wishlist, toggleCompare, compare } = useStore();
   const isWishlisted = wishlist.some((item) => item.id === product.id);
+  const isCompared = compare.some((item) => item.id === product.id);
+  const availability = getProductAvailability(product);
 
-  const discountAmount = product.oldPrice ? Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100) : 0;
+  const discountAmount = product.oldPrice
+    ? Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)
+    : 0;
+
+  const badges = [];
+
+  if (product.oldPrice || product.flags?.isOffer || product.flags?.isHotDeal) {
+    badges.push({
+      label: 'Offer',
+      tone: 'bg-brand text-white',
+    });
+  }
+
+  if (product.flags?.isHotDeal) {
+    badges.push({
+      label: 'Hot',
+      tone: 'bg-blue-600 text-white',
+    });
+  } else if (product.isNew) {
+    badges.push({
+      label: 'New',
+      tone: 'bg-brand-green text-white',
+    });
+  }
+
+  if (product.condition === 'Ex-UK Used') {
+    badges.push({
+      label: 'Ex-UK Used',
+      tone: 'bg-slate-900 text-white',
+    });
+  }
+
+  if (product.status === 'out_of_stock') {
+    badges.push({
+      label: 'Out of Stock',
+      tone: 'bg-red-500 text-white',
+    });
+  }
 
   return (
-    <div className="group bg-white rounded-3xl border border-gray-100/50 shadow-premium hover-shadow-premium hover-lift transition-all duration-500 overflow-hidden relative">
-      
-      {/* Badges */}
-      <div className="absolute top-4 left-4 z-20 flex flex-col gap-2">
-        {product.isNew && (
-          <span className="bg-brand-green text-white text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-tighter shadow-sm">
-            New Arrival
-          </span>
-        )}
-        {product.flags?.isHotDeal && (
-          <span className="bg-amber-400 text-black text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-tighter shadow-sm flex items-center gap-1">
-            <span className="animate-pulse">🔥</span> Hot Deal
-          </span>
-        )}
-        {discountAmount > 0 && (
-          <span className="bg-brand text-white text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-tighter shadow-sm">
-            -{discountAmount}%
-          </span>
-        )}
-        {product.condition === 'Ex-UK Used' && (
-          <span className="bg-slate-800 text-white text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-tighter shadow-sm">
-            Ex-UK Used
-          </span>
-        )}
-      </div>
+    <article className="group flex h-full flex-col rounded-[28px] border border-brand-green/70 bg-white p-4 shadow-[0_10px_30px_-22px_rgba(15,23,42,0.45)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_-25px_rgba(15,23,42,0.45)]">
+      <div className="mb-4 flex items-start justify-between gap-3">
+        <div className="flex flex-wrap gap-2">
+          {badges.slice(0, 2).map((badge) => (
+            <span
+              key={badge.label}
+              className={clsx(
+                'rounded-lg px-3 py-1 text-[11px] font-black uppercase tracking-wide',
+                badge.tone
+              )}
+            >
+              {badge.label}
+            </span>
+          ))}
+          {discountAmount > 0 && !product.flags?.isHotDeal && (
+            <span className="rounded-lg bg-red-50 px-3 py-1 text-[11px] font-black uppercase tracking-wide text-brand">
+              -{discountAmount}%
+            </span>
+          )}
+        </div>
 
-      {/* Wishlist Button */}
-      <button
-        type="button"
-        aria-label={isWishlisted ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`}
-        onClick={(e) => {
-          e.preventDefault();
-          toggleWishlist(product);
-        }}
-        className={clsx(
-          "absolute top-4 right-4 z-20 w-10 h-10 rounded-full backdrop-blur-md border flex items-center justify-center hover:scale-110 transition-all opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0",
-          isWishlisted
-            ? "bg-brand text-white border-brand shadow-lg"
-            : "bg-white/80 border-gray-100 text-gray-400 hover:text-brand"
-        )}
-      >
-        <Heart size={18} fill={isWishlisted ? "currentColor" : "none"} />
-      </button>
-
-      {/* Image Section */}
-      <Link to={`/product/${product.id}`} className="block relative aspect-square overflow-hidden bg-white p-6">
-        <img 
-          src={product.image} 
-          alt={product.name}
-          className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110"
-        />
-        
-        {/* Quick Actions Overlay */}
-        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
-          <button 
-            type="button"
-            aria-label={`Add ${product.name} to cart`}
-            className="w-12 h-12 rounded-2xl bg-white text-gray-900 shadow-xl flex items-center justify-center hover:bg-brand hover:text-white transition-all transform translate-y-8 group-hover:translate-y-0 duration-300 delay-75"
-            onClick={(e) => {
-              e.preventDefault();
-              addToCart(product);
-            }}
-          >
-            <ShoppingCart size={20} />
-          </button>
+        {/* Action buttons: Wishlist + Compare */}
+        <div className="flex items-center gap-2">
           <button
             type="button"
-            aria-label={`View ${product.name} details`}
-            className="w-12 h-12 rounded-2xl bg-white text-gray-900 shadow-xl flex items-center justify-center hover:bg-black hover:text-white transition-all transform translate-y-8 group-hover:translate-y-0 duration-300 delay-150"
-            onClick={(e) => {
-              e.preventDefault();
-              navigate(`/product/${product.id}`);
-            }}
-          >
-            <Eye size={20} />
-          </button>
-        </div>
-      </Link>
-
-      {/* Info Section */}
-      <div className="p-6 pt-0">
-        <div className="mb-2">
-           <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{product.brand}</span>
-           <Link to={`/product/${product.id}`} className="block mt-1">
-             <h3 className="text-sm font-bold text-gray-900 line-clamp-2 leading-snug group-hover:text-brand transition-colors">
-               {product.name}
-             </h3>
-           </Link>
-        </div>
-
-        {/* Rating */}
-        <div className="flex items-center gap-1 mb-4">
-          <div className="flex text-amber-400">
-            {[...Array(5)].map((_, i) => (
-              <Star key={i} size={12} fill={i < Math.floor(product.rating || 5) ? "currentColor" : "none"} />
-            ))}
-          </div>
-          <span className="text-[10px] font-medium text-gray-400">({product.reviews || 0})</span>
-        </div>
-
-        {/* Pricing */}
-        <div className="flex items-end justify-between py-2 border-t border-gray-50 mt-auto">
-          <div className="flex flex-col">
-            {product.oldPrice && (
-              <span className="text-xs text-gray-400 line-through font-medium">KSh {product.oldPrice.toLocaleString()}</span>
+            aria-label={isWishlisted ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`}
+            onClick={(e) => { e.preventDefault(); toggleWishlist(product); }}
+            className={clsx(
+              'flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition-all',
+              isWishlisted
+                ? 'border-brand bg-brand text-white shadow-lg shadow-brand/15'
+                : 'border-gray-200 bg-white text-gray-500 hover:border-brand-green hover:text-brand'
             )}
-            <span className="text-lg font-black text-gray-900 leading-none">
-              KSh {product.price.toLocaleString()}
-            </span>
-          </div>
-          
-          <span className={clsx(
-            "text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-tighter",
-            product.inStock || product.status === 'In Stock' ? "text-brand-green bg-brand-green/10" : "text-gray-400 bg-gray-100"
-          )}>
-            {product.inStock || product.status === 'In Stock' ? 'In Stock' : 'Out of Stock'}
-          </span>
+          >
+            <Heart size={18} fill={isWishlisted ? 'currentColor' : 'none'} />
+          </button>
+
+          <button
+            type="button"
+            aria-label={isCompared ? `Remove ${product.name} from comparison` : `Add ${product.name} to comparison`}
+            onClick={(e) => { e.preventDefault(); toggleCompare(product); }}
+            title={compare.length >= 4 && !isCompared ? 'Comparison full (max 4)' : undefined}
+            disabled={compare.length >= 4 && !isCompared}
+            className={clsx(
+              'flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition-all',
+              isCompared
+                ? 'border-brand-green bg-brand-green text-white shadow-lg shadow-brand-green/20'
+                : 'border-gray-200 bg-white text-gray-500 hover:border-brand-green hover:text-brand-green disabled:opacity-40 disabled:cursor-not-allowed'
+            )}
+          >
+            <BarChart3 size={16} />
+          </button>
         </div>
       </div>
 
-    </div>
+      <Link
+        to={`/product/${product.id}`}
+        className="mb-5 flex min-h-[260px] items-center justify-center rounded-[22px] border border-gray-100 bg-white px-4 py-6 sm:min-h-[280px]"
+      >
+        <img
+          src={product.image || PRODUCT_IMAGE_FALLBACK}
+          alt={`${product.brand} ${product.name}`}
+          onError={(event) => {
+            event.currentTarget.src = PRODUCT_IMAGE_FALLBACK;
+          }}
+          className="max-h-[230px] w-full object-contain transition-transform duration-500 group-hover:scale-[1.03] sm:max-h-[250px]"
+        />
+      </Link>
+
+      <div className="flex flex-1 flex-col">
+        <Link to={`/product/${product.id}`} className="block">
+          <h3 className="text-xl font-black leading-tight text-gray-900 transition-colors group-hover:text-brand">
+            {product.name}
+          </h3>
+        </Link>
+
+        <p className="mt-2 text-base font-medium text-gray-500">{product.brand}</p>
+
+        <div className="mt-3 flex items-center gap-2">
+          <span className={clsx('h-2 w-2 rounded-full', availability.dot)}></span>
+          <span className={clsx('text-[11px] font-black uppercase tracking-[0.2em]', availability.tone)}>
+            {availability.label}
+          </span>
+        </div>
+
+        <div className="mt-4 flex flex-wrap items-end gap-x-3 gap-y-2">
+          <span className="text-2xl font-black leading-none text-brand">
+            KSh {product.price.toLocaleString()}
+          </span>
+          {product.oldPrice && (
+            <span className="text-lg font-medium text-gray-400 line-through">
+              KSh {product.oldPrice.toLocaleString()}
+            </span>
+          )}
+        </div>
+
+        <div className="mt-6 pt-2">
+          <Link
+            to={`/product/${product.id}`}
+            className="inline-flex w-full items-center justify-center rounded-2xl border border-brand-green bg-white px-5 py-4 text-sm font-black uppercase tracking-wide text-gray-900 transition-all hover:bg-brand-green hover:text-white"
+          >
+            Buy Now
+          </Link>
+        </div>
+      </div>
+    </article>
   );
 }

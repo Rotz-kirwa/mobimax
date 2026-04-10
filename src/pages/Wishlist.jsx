@@ -9,6 +9,8 @@ export default function Wishlist() {
   if (wishlist.length === 0) {
     return (
       <div className="container mx-auto px-4 max-w-5xl py-28 text-center">
+        <title>My Wishlist – MobiPlus</title>
+        <meta name="description" content="Your saved MobiPlus items. Add to cart and check out with M-Pesa anytime." />
         <div className="bg-white rounded-[40px] p-12 md:p-16 shadow-premium border border-gray-100">
           <div className="w-20 h-20 mx-auto mb-8 rounded-[28px] bg-brand/10 text-brand flex items-center justify-center">
             <Heart size={36} />
@@ -32,6 +34,8 @@ export default function Wishlist() {
 
   return (
     <div className="bg-gray-50 min-h-screen pb-24">
+      <title>My Wishlist ({wishlist.length} saved) – MobiPlus</title>
+      <meta name="description" content="Your saved MobiPlus items. Add to cart and check out with M-Pesa anytime." />
       <div className="bg-white border-b border-gray-100 py-10">
         <div className="container mx-auto px-4 max-w-7xl flex flex-col md:flex-row items-start md:items-end justify-between gap-6">
           <div>
@@ -60,7 +64,7 @@ export default function Wishlist() {
       </div>
 
       <div className="container mx-auto px-4 max-w-7xl mt-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
           {wishlist.map((product) => (
             <div key={product.id} className="space-y-4">
               <ProductCard product={product} />

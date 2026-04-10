@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Sparkles, Zap, Award, ShieldCheck, Truck, RotateCcw, Headphones as Support, ArrowRight, TrendingUp, ChevronDown } from 'lucide-react';
 import HeroCarousel from '../components/home/HeroCarousel';
 import ProductCard from '../components/ui/ProductCard';
-import { products, categories, brands } from '../data/mockData';
 import clsx from 'clsx';
+import { useCatalogStore } from '../store/useCatalogStore';
 
 export default function Home() {
+  const products = useCatalogStore((state) => state.products);
+  const categories = useCatalogStore((state) => state.categories);
+  const brands = useCatalogStore((state) => state.brands);
+  // React 19 hoists <title>/<meta> to <head> automatically
   const hotDeals = products.filter(p => p.flags?.isHotDeal).slice(0, 4);
   const featuredProducts = products.filter(p => p.flags?.isFeatured).slice(0, 8);
   const newArrivals = products.filter(p => p.isNew).slice(0, 8);
@@ -20,15 +23,63 @@ export default function Home() {
     trending: products.slice(10, 18)
   };
 
+  const brandThemes = {
+    Apple: {
+      accent: 'from-slate-900 via-slate-700 to-slate-500',
+      glow: 'from-slate-900/20 via-slate-500/15 to-transparent'
+    },
+    Samsung: {
+      accent: 'from-blue-700 via-blue-500 to-cyan-400',
+      glow: 'from-blue-600/20 via-cyan-400/15 to-transparent'
+    },
+    Xiaomi: {
+      accent: 'from-orange-500 via-red-500 to-amber-400',
+      glow: 'from-orange-500/20 via-red-400/15 to-transparent'
+    },
+    Oppo: {
+      accent: 'from-emerald-600 via-green-500 to-lime-400',
+      glow: 'from-emerald-500/20 via-lime-400/15 to-transparent'
+    },
+    Tecno: {
+      accent: 'from-sky-600 via-cyan-500 to-blue-400',
+      glow: 'from-sky-500/20 via-cyan-400/15 to-transparent'
+    },
+    Infinix: {
+      accent: 'from-violet-600 via-fuchsia-500 to-pink-400',
+      glow: 'from-violet-500/20 via-fuchsia-400/15 to-transparent'
+    },
+    Sony: {
+      accent: 'from-zinc-800 via-zinc-600 to-indigo-400',
+      glow: 'from-zinc-700/20 via-indigo-400/15 to-transparent'
+    },
+    JBL: {
+      accent: 'from-red-600 via-orange-500 to-yellow-400',
+      glow: 'from-red-500/20 via-orange-400/15 to-transparent'
+    }
+  };
+
+  const featuredBrands = brands.slice(0, 8).map((brand) => ({
+    name: brand.name,
+    ...(brandThemes[brand.name] || {
+      accent: 'from-slate-900 via-slate-700 to-slate-500',
+      glow: 'from-slate-900/20 via-slate-500/15 to-transparent',
+    })
+  }));
+
   return (
     <div className="bg-white min-h-screen">
+      <title>MobiPlus – Premium Electronics in Kenya</title>
+      <meta name="description" content="Shop genuine smartphones, laptops, audio gear and accessories at MobiPlus Kenya. M-Pesa accepted. Fast countrywide delivery. Official warranty on all devices." />
+      <meta property="og:title" content="MobiPlus – Premium Electronics in Kenya" />
+      <meta property="og:description" content="Kenya's premium electronics store. Genuine devices, M-Pesa payments, express delivery." />
+      <meta property="og:type" content="website" />
       {/* Hero Section */}
       <HeroCarousel />
 
       {/* Trust Badges - Horizontal Strip */}
       <section className="bg-gray-50 border-y border-gray-100 py-10">
         <div className="container mx-auto px-4 max-w-7xl">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8">
             <div className="flex items-center gap-4">
                <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-brand-green shadow-sm border border-gray-100">
                   <ShieldCheck size={24} />
@@ -70,15 +121,53 @@ export default function Home() {
       </section>
 
       {/* Shop By Brand Strip */}
-      <section className="py-12 border-b border-gray-50">
+      <section className="relative overflow-hidden border-b border-gray-100 bg-gradient-to-b from-white via-emerald-50/30 to-white py-16">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute left-[8%] top-[-25%] h-56 w-56 rounded-full bg-brand-green/10 blur-3xl"></div>
+          <div className="absolute right-[10%] bottom-[-30%] h-64 w-64 rounded-full bg-brand/10 blur-3xl"></div>
+        </div>
         <div className="container mx-auto px-4 max-w-7xl">
-           <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16 opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-700">
-              {brands.slice(0, 8).map((brand, idx) => (
-                <span key={idx} className="text-xl md:text-3xl font-black italic tracking-tighter text-gray-400 uppercase cursor-pointer hover:text-brand-green">
-                  {brand}
+          <div className="relative z-10">
+            <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+              <div className="max-w-2xl">
+                <span className="mb-4 inline-flex rounded-full bg-white px-4 py-2 text-[10px] font-black uppercase tracking-[0.35em] text-brand-green shadow-sm ring-1 ring-brand-green/10">
+                  Brand Spotlight
                 </span>
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tighter text-gray-900 uppercase">
+                  Shop the Brands Everyone Wants
+                </h2>
+                <p className="mt-4 max-w-xl text-sm font-medium leading-relaxed text-gray-500">
+                  Explore handpicked brand lanes with a brighter, more premium feel before you dive into the deals.
+                </p>
+              </div>
+
+              <Link
+                to="/shop"
+                className="group inline-flex items-center gap-3 self-start rounded-3xl bg-gray-900 px-7 py-4 text-xs font-black uppercase tracking-[0.2em] text-white transition-all hover:bg-brand-green"
+              >
+                Browse Full Catalog
+                <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-6 md:gap-x-12 md:gap-y-8">
+              {featuredBrands.map((brand) => (
+                <Link
+                  key={brand.name}
+                  to={`/shop?brand=${brand.name.toLowerCase()}`}
+                  className={clsx(
+                    'group relative inline-flex items-center justify-center px-2 py-3 transition-transform duration-300 hover:-translate-y-1'
+                  )}
+                >
+                  <span className={clsx('absolute inset-x-2 bottom-1 h-4 rounded-full bg-gradient-to-r opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100', brand.glow)}></span>
+                  <span className={clsx('relative bg-gradient-to-r bg-clip-text text-3xl font-black uppercase italic tracking-[-0.06em] text-transparent transition-all duration-300 sm:text-4xl md:text-5xl lg:text-6xl', brand.accent)}>
+                    {brand.name}
+                  </span>
+                  <span className={clsx('absolute -bottom-1 left-2 right-2 h-0.5 origin-left scale-x-0 bg-gradient-to-r transition-transform duration-300 group-hover:scale-x-100', brand.accent)}></span>
+                </Link>
               ))}
-           </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -101,7 +190,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 md:gap-8">
             {hotDeals.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
@@ -164,7 +253,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 md:gap-8">
             {tabContent[activeTab].map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
@@ -200,20 +289,22 @@ export default function Home() {
                 ))}
              </div>
              
-             <div className="mt-20 flex flex-col md:flex-row items-center justify-center gap-12 border-t border-white/5 pt-20">
+             <div className="mt-20 grid grid-cols-2 gap-8 border-t border-white/5 pt-20 text-left md:grid-cols-4 md:text-center">
                 <div className="flex flex-col gap-2">
                    <span className="text-6xl font-black text-brand-green leading-none tracking-tighter">70+</span>
                    <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Premium Brands</span>
                 </div>
-                <div className="w-px h-12 bg-white/10 hidden md:block"></div>
                 <div className="flex flex-col gap-2">
                    <span className="text-6xl font-black text-white leading-none tracking-tighter">10K+</span>
                    <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Happy Customers</span>
                 </div>
-                <div className="w-px h-12 bg-white/10 hidden md:block"></div>
                 <div className="flex flex-col gap-2">
                    <span className="text-6xl font-black text-brand leading-none tracking-tighter">24H</span>
                    <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Speed Delivery</span>
+                </div>
+                <div className="flex flex-col gap-2">
+                   <span className="text-6xl font-black text-white leading-none tracking-tighter">99%</span>
+                   <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Customer Satisfaction</span>
                 </div>
              </div>
           </div>

@@ -1,16 +1,66 @@
-# React + Vite
+# Mobiplus Storefront
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Premium electronics storefront built with React, Vite, Tailwind CSS, and Zustand.
 
-Currently, two official plugins are available:
+## Local development
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+npm run dev
+```
 
-## React Compiler
+## Checkout and M-Pesa STK push
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The checkout page now supports a real details -> payment flow and posts M-Pesa requests to the server-side endpoint at `/api/mpesa/stk-push`.
 
-## Expanding the ESLint configuration
+### Required environment variables
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Copy `.env.example` and fill in your Daraja credentials:
+
+```bash
+cp .env.example .env
+```
+
+Required values:
+
+- `ADMIN_USERNAME`
+- `ADMIN_PASSWORD`
+- `ADMIN_SESSION_SECRET`
+- `MPESA_ENV`
+- `MPESA_CONSUMER_KEY`
+- `MPESA_CONSUMER_SECRET`
+- `MPESA_SHORTCODE`
+- `MPESA_PASSKEY`
+
+Optional values:
+
+- `MPESA_TRANSACTION_TYPE`
+- `MPESA_PARTY_B`
+- `MPESA_ACCOUNT_REFERENCE`
+- `MPESA_CALLBACK_URL`
+
+### Callback behavior
+
+If `MPESA_CALLBACK_URL` is not set, the STK endpoint will automatically use the deployed origin and send callbacks to:
+
+```text
+/api/mpesa/callback
+```
+
+When testing from local development, use a public HTTPS callback URL or run the project from a deployed environment. A plain `localhost` callback will not work with Safaricom.
+
+### Deployment note
+
+The frontend is a Vite app, and the M-Pesa handlers live in `api/mpesa/*.js` as Vercel Functions. Deploying on Vercel is the simplest way to run the storefront and the STK endpoint together.
+
+## Admin dashboard
+
+The project now includes a protected admin dashboard at `/admin` with:
+
+- admin login via server-side session cookie
+- product management with image uploads, pricing, stock, merchandising flags, and thumbnail selection
+- category and brand management
+- order and payment status visibility
+- inventory and revenue overview cards
+
+In local development, the default admin credentials come from `.env.example`. Change them before using the app in any shared environment.

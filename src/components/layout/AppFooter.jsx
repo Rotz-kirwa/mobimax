@@ -1,7 +1,17 @@
 import { Link } from 'react-router-dom';
 import { Share2, MessageCircle, Instagram, Youtube, MapPin, Phone, Mail, ArrowRight } from 'lucide-react';
+import { useCatalogStore } from '../../store/useCatalogStore';
 
 export default function Footer() {
+  const categories = useCatalogStore((state) => state.categories);
+  const brands = useCatalogStore((state) => state.brands);
+  const socialLinks = [
+    { label: 'Share on WhatsApp', href: 'https://wa.me/254797674862', icon: Share2 },
+    { label: 'Chat on WhatsApp', href: 'https://wa.me/254797674862', icon: MessageCircle },
+    { label: 'Visit Instagram', href: 'https://instagram.com', icon: Instagram },
+    { label: 'Visit YouTube', href: 'https://youtube.com', icon: Youtube },
+  ];
+
   return (
     <footer className="bg-white pt-20 mt-auto border-t border-gray-100">
       <div className="container mx-auto px-4 max-w-7xl">
@@ -24,9 +34,16 @@ export default function Footer() {
             </p>
             
             <div className="flex gap-3">
-              {[Share2, MessageCircle, Instagram, Youtube].map((Icon, idx) => (
-                <a key={idx} href="#" className="w-10 h-10 rounded-2xl bg-gray-50 flex items-center justify-center text-gray-600 hover:bg-brand-green hover:text-white hover:-translate-y-1 transition-all duration-300">
-                  <Icon size={18} />
+              {socialLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={link.label}
+                  className="w-10 h-10 rounded-2xl bg-gray-50 flex items-center justify-center text-gray-600 hover:bg-brand-green hover:text-white hover:-translate-y-1 transition-all duration-300"
+                >
+                  <link.icon size={18} />
                 </a>
               ))}
             </div>
@@ -39,12 +56,13 @@ export default function Footer() {
               <span className="absolute -bottom-2 left-0 w-8 h-0.5 bg-brand-green"></span>
             </h3>
             <ul className="flex flex-col gap-4">
-              <li><Link to="/shop?category=phones" className="text-gray-500 hover:text-brand-green text-sm font-bold transition-colors">Smartphones</Link></li>
-              <li><Link to="/shop?category=computing" className="text-gray-500 hover:text-brand-green text-sm font-bold transition-colors">Laptops & PCs</Link></li>
-              <li><Link to="/shop?category=audio" className="text-gray-500 hover:text-brand-green text-sm font-bold transition-colors">Audio & Earbuds</Link></li>
-              <li><Link to="/shop?category=wearables" className="text-gray-500 hover:text-brand-green text-sm font-bold transition-colors">Smartwatches</Link></li>
-              <li><Link to="/shop?category=gaming" className="text-gray-500 hover:text-brand-green text-sm font-bold transition-colors">Gaming Consoles</Link></li>
-              <li><Link to="/shop?condition=Ex-UK Used" className="text-gray-500 hover:text-brand-green text-sm font-bold transition-colors">Ex-UK Products</Link></li>
+              {categories.slice(0, 6).map((category) => (
+                <li key={category.id}>
+                  <Link to={`/shop?category=${category.id}`} className="text-gray-500 hover:text-brand-green text-sm font-bold transition-colors">
+                    {category.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -55,12 +73,13 @@ export default function Footer() {
               <span className="absolute -bottom-2 left-0 w-8 h-0.5 bg-brand-green"></span>
             </h3>
             <ul className="flex flex-col gap-4">
-              <li><Link to="/shop?brand=apple" className="text-gray-500 hover:text-brand-green text-sm font-bold transition-colors">Apple</Link></li>
-              <li><Link to="/shop?brand=samsung" className="text-gray-500 hover:text-brand-green text-sm font-bold transition-colors">Samsung</Link></li>
-              <li><Link to="/shop?brand=google" className="text-gray-500 hover:text-brand-green text-sm font-bold transition-colors">Google Pixel</Link></li>
-              <li><Link to="/shop?brand=xiaomi" className="text-gray-500 hover:text-brand-green text-sm font-bold transition-colors">Xiaomi</Link></li>
-              <li><Link to="/shop?brand=sony" className="text-gray-500 hover:text-brand-green text-sm font-bold transition-colors">Sony</Link></li>
-              <li><Link to="/shop?brand=oraimo" className="text-gray-500 hover:text-brand-green text-sm font-bold transition-colors">Oraimo</Link></li>
+              {brands.slice(0, 6).map((brand) => (
+                <li key={brand.id}>
+                  <Link to={`/shop?brand=${brand.slug}`} className="text-gray-500 hover:text-brand-green text-sm font-bold transition-colors">
+                    {brand.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -135,6 +154,9 @@ export default function Footer() {
             <div className="flex flex-col gap-2 items-center md:items-start">
               <p className="text-[11px] font-black text-gray-400 uppercase tracking-widest">&copy; {new Date().getFullYear()} MobiMax Premium Storefront. Designed for Excellence.</p>
               <div className="flex flex-wrap justify-center md:justify-start gap-4">
+                <Link to="/about" className="text-[11px] font-bold text-gray-400 hover:text-gray-900 transition-colors uppercase tracking-widest">About</Link>
+                <Link to="/contact" className="text-[11px] font-bold text-gray-400 hover:text-gray-900 transition-colors uppercase tracking-widest">Contact</Link>
+                <Link to="/faq" className="text-[11px] font-bold text-gray-400 hover:text-gray-900 transition-colors uppercase tracking-widest">FAQ</Link>
                 <Link to="/privacy" className="text-[11px] font-bold text-gray-400 hover:text-gray-900 transition-colors uppercase tracking-widest">Privacy</Link>
                 <Link to="/terms" className="text-[11px] font-bold text-gray-400 hover:text-gray-900 transition-colors uppercase tracking-widest">Terms</Link>
                 <Link to="/cookies" className="text-[11px] font-bold text-gray-400 hover:text-gray-900 transition-colors uppercase tracking-widest">Cookies</Link>

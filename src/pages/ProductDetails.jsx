@@ -1,14 +1,16 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ShoppingCart, Heart, Activity, Check, Shield, Truck, Package, Star, Share2, ChevronRight, Info, ArrowRight } from 'lucide-react';
+import { ShoppingCart, Heart, Check, Shield, Truck, Star, ChevronRight, Info, ArrowRight } from 'lucide-react';
 import { useStore } from '../store/useStore';
-import { products } from '../data/mockData';
 import clsx from 'clsx';
 import ProductCard from '../components/ui/ProductCard';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getProductAvailability } from '../lib/catalog';
+import { useCatalogStore } from '../store/useCatalogStore';
 
 export default function ProductDetails() {
   const { id } = useParams();
+  const products = useCatalogStore((state) => state.products);
   const product = products.find(p => p.id === id);
   const { addToCart, toggleWishlist, wishlist } = useStore();
   
@@ -19,6 +21,7 @@ export default function ProductDetails() {
   if (!product) {
     return (
       <div className="container mx-auto px-4 max-w-7xl py-40 text-center">
+        <title>Product Not Found – MobiPlus</title>
         <h1 className="text-3xl sm:text-4xl font-black text-gray-900 mb-4">Item Not Found</h1>
         <p className="text-gray-500 mb-8 font-bold uppercase tracking-widest">The product has been removed or the link is broken.</p>
         <Link to="/shop" className="bg-brand-green text-white px-10 py-5 rounded-3xl font-black text-xs uppercase tracking-widest hover:shadow-xl transition-all">Back to Store</Link>
@@ -28,13 +31,19 @@ export default function ProductDetails() {
 
   const isWishlisted = wishlist.some(item => item.id === product.id);
   const relatedProducts = products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
-  const discountAmount = product.oldPrice ? Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100) : 0;
+  const gallery = product.images?.length ? product.images : [product.image];
+  const availability = getProductAvailability(product);
 
-  // Mock gallery images since we use single images in mockData
-  const gallery = [product.image, ...Array(3).fill(product.image)];
+  const metaDescription = `Buy the ${product.brand} ${product.name} at KSh ${product.price.toLocaleString()} from MobiPlus Kenya. Genuine device with official warranty. M-Pesa accepted. Fast countrywide delivery.`;
 
   return (
     <div className="bg-white min-h-screen pb-24">
+      <title>{product.name} – Buy on MobiPlus | {product.brand}</title>
+      <meta name="description" content={metaDescription} />
+      <meta property="og:title" content={`${product.name} – MobiPlus Kenya`} />
+      <meta property="og:description" content={metaDescription} />
+      <meta property="og:image" content={product.image} />
+      <meta property="og:type" content="product" />
       {/* Premium Breadcrumb Header */}
       <div className="bg-gray-50 border-b border-gray-100 py-6">
         <div className="container mx-auto px-4 max-w-7xl">
@@ -58,14 +67,14 @@ export default function ProductDetails() {
             <div className="sticky top-28 space-y-6">
               <div className="relative aspect-square bg-white rounded-[40px] border border-gray-100 shadow-premium overflow-hidden group">
                 <AnimatePresence mode="wait">
-                  <motion.img 
+                  <motion.img
                     key={selectedImage}
-                    src={gallery[selectedImage]} 
+                    src={gallery[selectedImage]}
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 1.05 }}
                     transition={{ duration: 0.4 }}
-                    alt={product.name} 
+                    alt={`${product.brand} ${product.name}`}
                     className="w-full h-full object-contain p-12 mix-blend-multiply"
                   />
                 </AnimatePresence>
@@ -104,7 +113,7 @@ export default function ProductDetails() {
                       selectedImage === idx ? "border-brand-green shadow-lg" : "border-gray-100 opacity-60 hover:opacity-100"
                     )}
                   >
-                    <img src={img} className="w-full h-full object-contain" alt={`thumb-${idx}`} />
+                    <img src={img} className="w-full h-full object-contain" alt={`${product.brand} ${product.name} – view ${idx + 1}`} />
                   </button>
                 ))}
               </div>
@@ -133,10 +142,10 @@ export default function ProductDetails() {
                   <span className="w-1 h-1 rounded-full bg-gray-200"></span>
                   <div className={clsx(
                     "flex items-center gap-2 text-[10px] font-black uppercase tracking-widest",
-                    product.inStock || product.status === 'In Stock' ? "text-brand-green" : "text-gray-400"
+                    availability.tone
                   )}>
-                    <div className={clsx("w-2 h-2 rounded-full", product.inStock || product.status === 'In Stock' ? "bg-brand-green animate-pulse" : "bg-gray-300")}></div>
-                    {product.inStock || product.status === 'In Stock' ? "Ready to Ship" : "Confirm Stock"}
+                    <div className={clsx("w-2 h-2 rounded-full", availability.dot, availability.label === 'In Stock' && "animate-pulse")}></div>
+                    {availability.label}
                   </div>
                </div>
             </div>
@@ -151,7 +160,11 @@ export default function ProductDetails() {
                </div>
                <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-gray-400">
                  <span>VAT Included</span>
-                 <span className="text-brand">You save KSh {(product.oldPrice - product.price).toLocaleString()}</span>
+                 {product.oldPrice ? (
+                   <span className="text-brand">You save KSh {(product.oldPrice - product.price).toLocaleString()}</span>
+                 ) : (
+                   <span className="text-brand-green">Best current price</span>
+                 )}
                </div>
             </div>
 
@@ -295,7 +308,7 @@ export default function ProductDetails() {
                   <ArrowRight size={24} />
                </Link>
             </div>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10">
               {relatedProducts.map((p) => (
                 <ProductCard key={p.id} product={p} />
               ))}
