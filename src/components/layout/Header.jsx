@@ -71,12 +71,12 @@ export default function Header() {
       <header className="bg-white w-full z-50 relative border-b border-gray-100 shadow-sm">
         {/* Top bar with promotional message */}
         <div className="bg-gray-900 text-white py-2 overflow-hidden">
-          <div className="container mx-auto px-4 max-w-7xl flex justify-between items-center text-[11px] font-bold uppercase tracking-[0.2em]">
-            <div className="flex gap-6">
+          <div className="container mx-auto px-4 max-w-7xl flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-4 text-[9px] sm:text-[10px] md:text-[11px] font-bold uppercase tracking-[0.08em] sm:tracking-[0.12em] md:tracking-[0.2em] text-center sm:text-left">
+            <div className="flex flex-col md:flex-row justify-center sm:justify-start gap-1 md:gap-6">
               <span>Pay on Delivery Website</span>
               <span className="hidden md:inline">Countrywide Delivery</span>
             </div>
-            <div className="flex gap-4">
+            <div className="flex flex-col sm:flex-row justify-center gap-1 sm:gap-4">
               <Link to="/deals" className="text-brand hover:text-white transition-colors">🔥 Hot Deals</Link>
               <Link to="/shop" className="hover:text-brand transition-colors">New Arrivals</Link>
             </div>

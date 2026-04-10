@@ -23,7 +23,7 @@ export default function Cart() {
           <div className="w-24 h-24 bg-gray-50 rounded-[28px] flex items-center justify-center text-gray-300 mb-8 border border-gray-100">
             <ShoppingBag size={48} />
           </div>
-          <h2 className="text-4xl font-black text-gray-900 uppercase tracking-tighter mb-4">Your Gallery is Empty</h2>
+          <h2 className="text-3xl sm:text-4xl font-black text-gray-900 uppercase tracking-tighter mb-4">Your Gallery is Empty</h2>
           <p className="text-gray-400 font-bold text-sm uppercase tracking-[0.2em] mb-12 max-w-md leading-relaxed">
             Every collection starts with a single piece. Explore our premium selections to begin.
           </p>
@@ -46,7 +46,7 @@ export default function Cart() {
                     <div className="w-10 h-0.5 bg-brand-green"></div>
                     <span className="text-[10px] font-black text-brand-green uppercase tracking-[0.3em]">Purchase Review</span>
                  </div>
-                 <h1 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tighter uppercase leading-none">
+                 <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 tracking-tighter uppercase leading-none">
                     Shopping Cart
                  </h1>
               </div>

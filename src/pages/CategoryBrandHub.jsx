@@ -53,7 +53,7 @@ export default function CategoryBrandHub() {
                  </span>
                  <div className="w-12 h-px bg-white/30"></div>
               </div>
-              <h1 className={clsx("text-5xl md:text-8xl font-black mb-6 tracking-tighter uppercase", currentMeta.text)}>
+              <h1 className={clsx("text-4xl sm:text-5xl md:text-8xl font-black mb-6 tracking-tighter uppercase", currentMeta.text)}>
                 {hubName}
               </h1>
               <p className={clsx("text-lg md:text-xl font-bold opacity-60 uppercase tracking-widest leading-none", currentMeta.text)}>
@@ -69,7 +69,7 @@ export default function CategoryBrandHub() {
           <div className="container mx-auto px-4 max-w-7xl">
             <div className="flex items-center justify-between mb-16 px-4">
                <div>
-                  <h2 className="text-3xl font-black text-gray-900 uppercase tracking-tighter">Elite Selections</h2>
+                  <h2 className="text-2xl sm:text-3xl font-black text-gray-900 uppercase tracking-tighter">Elite Selections</h2>
                   <p className="text-gray-400 font-bold text-xs uppercase tracking-widest mt-2">{hubName}'s most prestigious releases</p>
                </div>
                <Link to={`/shop?${isBrand ? 'brand' : 'category'}=${slug}`} className="flex items-center gap-2 text-xs font-black uppercase tracking-widest hover:text-brand-green transition-colors">
@@ -112,7 +112,7 @@ export default function CategoryBrandHub() {
       <section className="py-24">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="flex flex-col items-center mb-16 text-center">
-             <h2 className="text-4xl font-black text-gray-900 uppercase tracking-tighter mb-4">Complete Collection</h2>
+             <h2 className="text-3xl sm:text-4xl font-black text-gray-900 uppercase tracking-tighter mb-4">Complete Collection</h2>
              <div className="w-16 h-1 bg-brand-green rounded-full"></div>
           </div>
 

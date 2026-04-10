@@ -7,6 +7,10 @@ import ProductDetails from './pages/ProductDetails';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import CategoryBrandHub from './pages/CategoryBrandHub';
+import Wishlist from './pages/Wishlist';
+import Account from './pages/Account';
+import LegalPage from './pages/LegalPage';
+import NotFound from './pages/NotFound';
 import WhatsAppFloat from './components/ui/WhatsAppFloat';
 
 function RootLayout() {
@@ -29,10 +33,17 @@ function App() {
         <Route path="/" element={<RootLayout />}>
           <Route index element={<Home />} />
           <Route path="shop" element={<Shop />} />
+          <Route path="deals" element={<Shop />} />
+          <Route path="account" element={<Account />} />
+          <Route path="wishlist" element={<Wishlist />} />
+          <Route path="privacy" element={<LegalPage pageKey="privacy" />} />
+          <Route path="terms" element={<LegalPage pageKey="terms" />} />
+          <Route path="cookies" element={<LegalPage pageKey="cookies" />} />
           <Route path=":type/:slug" element={<CategoryBrandHub />} />
           <Route path="product/:id" element={<ProductDetails />} />
           <Route path="cart" element={<Cart />} />
           <Route path="checkout" element={<Checkout />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>

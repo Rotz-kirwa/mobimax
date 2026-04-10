@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { Filter, ChevronDown, Check, X, Search, SlidersHorizontal, ArrowUpDown } from 'lucide-react';
 import ProductCard from '../components/ui/ProductCard';
 import { products, categories, brands } from '../data/mockData';
@@ -7,9 +7,11 @@ import clsx from 'clsx';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Shop() {
+  const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [sortBy, setSortBy] = useState('recommended');
+  const isDealsPage = location.pathname === '/deals';
   
   // Filtering Logic
   const activeCategory = searchParams.get('category');
@@ -22,6 +24,10 @@ export default function Shop() {
 
   const filteredProducts = useMemo(() => {
     let result = products;
+
+    if (isDealsPage) {
+      result = result.filter((p) => p.flags?.isHotDeal);
+    }
     
     if (searchQuery) {
       result = result.filter(p => 
@@ -56,7 +62,7 @@ export default function Shop() {
     }
     
     return result;
-  }, [activeCategory, activeSubcategory, activeBrand, activeCondition, minPrice, maxPrice, sortBy]);
+  }, [activeCategory, activeSubcategory, activeBrand, activeCondition, searchQuery, minPrice, maxPrice, sortBy, isDealsPage]);
 
   const updateParam = (key, value) => {
     const newParams = new URLSearchParams(searchParams);
@@ -77,14 +83,16 @@ export default function Shop() {
       {/* Search & Header Strip */}
       <div className="bg-white border-b border-gray-100 py-10">
         <div className="container mx-auto px-4 max-w-7xl">
-           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-              <div className="text-center md:text-left">
-                 <div className="flex items-center gap-2 mb-2 justify-center md:justify-start">
+           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+              <div className="text-left">
+                 <div className="flex items-center gap-2 mb-2 justify-start">
                     <div className="w-10 h-0.5 bg-brand-green"></div>
-                    <span className="text-[10px] font-black text-brand-green uppercase tracking-[0.3em]">Official Catalog</span>
+                    <span className="text-[10px] font-black text-brand-green uppercase tracking-[0.2em] sm:tracking-[0.3em]">
+                      {isDealsPage ? 'Limited Offers' : 'Official Catalog'}
+                    </span>
                  </div>
-                 <h1 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tighter uppercase leading-none">
-                    {activeCategory || activeBrand || 'The Gallery'}
+                 <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 tracking-tighter uppercase leading-none">
+                    {isDealsPage ? 'Hot Deals' : activeCategory || activeBrand || 'The Gallery'}
                  </h1>
               </div>
               <div className="flex items-center gap-4 w-full md:w-auto">
@@ -198,18 +206,18 @@ export default function Shop() {
           <div className="flex-1">
              
              {/* Toolbar */}
-             <div className="bg-white rounded-[32px] border border-gray-100 p-4 mb-8 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm">
-                <div className="flex items-center gap-4 px-4 font-bold text-xs uppercase tracking-widest text-gray-400">
+             <div className="bg-white rounded-[32px] border border-gray-100 p-4 mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-sm">
+                <div className="flex items-center gap-3 px-2 sm:px-4 font-bold text-[10px] sm:text-xs uppercase tracking-[0.08em] sm:tracking-widest text-gray-400 text-left">
                    <ArrowUpDown size={14} />
                    Showing {filteredProducts.length} Premium Items
                 </div>
-                <div className="flex gap-2 w-full md:w-auto">
+                <div className="grid grid-cols-2 sm:flex gap-2 w-full md:w-auto">
                    {['recommended', 'newest', 'price-low', 'price-high'].map(sort => (
                      <button
                         key={sort}
                         onClick={() => setSortBy(sort)}
                         className={clsx(
-                          "px-5 py-3 rounded-2xl text-[10px] font-black uppercase tracking-tighter transition-all border",
+                          "w-full sm:w-auto px-4 sm:px-5 py-3 rounded-2xl text-[10px] font-black uppercase tracking-tighter transition-all border",
                           sortBy === sort 
                             ? "bg-gray-900 text-white border-gray-900 shadow-lg" 
                             : "bg-white text-gray-400 border-gray-100 hover:text-gray-900"

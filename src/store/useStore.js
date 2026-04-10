@@ -37,6 +37,8 @@ export const useStore = create((set) => ({
     return { wishlist: [...state.wishlist, product] };
   }),
 
+  clearWishlist: () => set({ wishlist: [] }),
+
   toggleCompare: (product) => set((state) => {
     const exists = state.compare.some(item => item.id === product.id);
     if (exists) {

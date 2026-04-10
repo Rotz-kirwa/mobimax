@@ -112,7 +112,7 @@ export default function Footer() {
                  <p className="text-gray-400 font-bold text-sm">Subscribe to get notified about hot deals and new tech drops.</p>
               </div>
               <form 
-                className="flex w-full md:w-auto bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-2 focus-within:ring-2 focus-within:ring-brand-green transition-all"
+                className="flex flex-col sm:flex-row w-full md:w-auto bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-2 focus-within:ring-2 focus-within:ring-brand-green transition-all"
                 onSubmit={(e) => e.preventDefault()}
               >
                 <input 
@@ -120,7 +120,7 @@ export default function Footer() {
                   placeholder="name@email.com" 
                   className="bg-transparent text-white px-4 py-3 focus:outline-none w-full md:w-64 font-bold text-sm" 
                 />
-                <button type="submit" className="bg-brand-green text-white px-8 py-3 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-white hover:text-brand-green transition-all flex items-center gap-2">
+                <button type="submit" className="w-full sm:w-auto justify-center bg-brand-green text-white px-8 py-3 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-white hover:text-brand-green transition-all flex items-center gap-2">
                   Join <ArrowRight size={14} />
                 </button>
               </form>
@@ -134,7 +134,7 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="flex flex-col gap-2 items-center md:items-start">
               <p className="text-[11px] font-black text-gray-400 uppercase tracking-widest">&copy; {new Date().getFullYear()} MobiMax Premium Storefront. Designed for Excellence.</p>
-              <div className="flex gap-4">
+              <div className="flex flex-wrap justify-center md:justify-start gap-4">
                 <Link to="/privacy" className="text-[11px] font-bold text-gray-400 hover:text-gray-900 transition-colors uppercase tracking-widest">Privacy</Link>
                 <Link to="/terms" className="text-[11px] font-bold text-gray-400 hover:text-gray-900 transition-colors uppercase tracking-widest">Terms</Link>
                 <Link to="/cookies" className="text-[11px] font-bold text-gray-400 hover:text-gray-900 transition-colors uppercase tracking-widest">Cookies</Link>
@@ -142,7 +142,7 @@ export default function Footer() {
             </div>
             
             {/* Payment Icons Placeholder */}
-            <div className="flex items-center gap-4 opacity-50 grayscale hover:grayscale-0 transition-all">
+            <div className="flex flex-wrap items-center justify-center gap-4 opacity-50 grayscale hover:grayscale-0 transition-all">
                 <div className="h-6 w-10 bg-gray-200 rounded flex items-center justify-center text-[8px] font-black text-gray-400">VISA</div>
                 <div className="h-6 w-10 bg-gray-200 rounded flex items-center justify-center text-[8px] font-black text-gray-400">M-PESA</div>
                 <div className="h-6 w-10 bg-gray-200 rounded flex items-center justify-center text-[8px] font-black text-gray-400">MASTERCARD</div>

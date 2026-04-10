@@ -1,11 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingCart, Eye, Heart, Star } from 'lucide-react';
 import clsx from 'clsx';
 import { useStore } from '../../store/useStore';
 
 export default function ProductCard({ product }) {
-  const { addToCart } = useStore();
+  const navigate = useNavigate();
+  const { addToCart, toggleWishlist, wishlist } = useStore();
+  const isWishlisted = wishlist.some((item) => item.id === product.id);
 
   const discountAmount = product.oldPrice ? Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100) : 0;
 
@@ -37,8 +39,21 @@ export default function ProductCard({ product }) {
       </div>
 
       {/* Wishlist Button */}
-      <button className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-white/80 backdrop-blur-md border border-gray-100 flex items-center justify-center text-gray-400 hover:text-brand hover:scale-110 transition-all opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0">
-        <Heart size={18} />
+      <button
+        type="button"
+        aria-label={isWishlisted ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`}
+        onClick={(e) => {
+          e.preventDefault();
+          toggleWishlist(product);
+        }}
+        className={clsx(
+          "absolute top-4 right-4 z-20 w-10 h-10 rounded-full backdrop-blur-md border flex items-center justify-center hover:scale-110 transition-all opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0",
+          isWishlisted
+            ? "bg-brand text-white border-brand shadow-lg"
+            : "bg-white/80 border-gray-100 text-gray-400 hover:text-brand"
+        )}
+      >
+        <Heart size={18} fill={isWishlisted ? "currentColor" : "none"} />
       </button>
 
       {/* Image Section */}
@@ -52,6 +67,8 @@ export default function ProductCard({ product }) {
         {/* Quick Actions Overlay */}
         <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
           <button 
+            type="button"
+            aria-label={`Add ${product.name} to cart`}
             className="w-12 h-12 rounded-2xl bg-white text-gray-900 shadow-xl flex items-center justify-center hover:bg-brand hover:text-white transition-all transform translate-y-8 group-hover:translate-y-0 duration-300 delay-75"
             onClick={(e) => {
               e.preventDefault();
@@ -60,7 +77,15 @@ export default function ProductCard({ product }) {
           >
             <ShoppingCart size={20} />
           </button>
-          <button className="w-12 h-12 rounded-2xl bg-white text-gray-900 shadow-xl flex items-center justify-center hover:bg-black hover:text-white transition-all transform translate-y-8 group-hover:translate-y-0 duration-300 delay-150">
+          <button
+            type="button"
+            aria-label={`View ${product.name} details`}
+            className="w-12 h-12 rounded-2xl bg-white text-gray-900 shadow-xl flex items-center justify-center hover:bg-black hover:text-white transition-all transform translate-y-8 group-hover:translate-y-0 duration-300 delay-150"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(`/product/${product.id}`);
+            }}
+          >
             <Eye size={20} />
           </button>
         </div>

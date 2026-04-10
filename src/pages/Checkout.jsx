@@ -16,7 +16,7 @@ export default function Checkout() {
   if (cart.length === 0) {
     return (
       <div className="container mx-auto px-4 text-center py-40">
-        <h2 className="text-4xl font-black text-gray-900 uppercase tracking-tighter mb-4">No Inventory Selected</h2>
+        <h2 className="text-3xl sm:text-4xl font-black text-gray-900 uppercase tracking-tighter mb-4">No Inventory Selected</h2>
         <p className="text-gray-400 font-bold text-sm uppercase mb-12">Your checkout sequence was interrupted because the cart is empty.</p>
         <Link to="/shop" className="bg-brand-green text-white px-10 py-5 rounded-3xl font-black uppercase text-xs tracking-widest hover:shadow-xl transition-all">Explore Store</Link>
       </div>
@@ -33,7 +33,7 @@ export default function Checkout() {
                  <Link to="/cart" className="inline-flex items-center gap-2 text-[10px] font-black text-gray-400 hover:text-brand-green transition-colors uppercase tracking-[0.3em] mb-4">
                     <ChevronLeft size={16} strokeWidth={3} /> Return to Cart
                  </Link>
-                 <h1 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tighter uppercase leading-none">
+                 <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 tracking-tighter uppercase leading-none">
                     Checkout Protocol
                  </h1>
               </div>

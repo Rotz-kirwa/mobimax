@@ -15,11 +15,11 @@ export default function WhatsAppFloat() {
   }, []);
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end pointer-events-none">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end pointer-events-none">
       
       {/* Premium Greeting Bubble */}
       <div 
-        className={`mb-4 w-72 bg-white/95 backdrop-blur-xl border border-white/20 rounded-3xl shadow-[0_20px_50px_-15px_rgba(0,0,0,0.15)] p-5 transition-all duration-700 transform pointer-events-auto origin-bottom-right ${
+        className={`mb-3 sm:mb-4 w-[calc(100vw-2rem)] max-w-72 bg-white/95 backdrop-blur-xl border border-white/20 rounded-3xl shadow-[0_20px_50px_-15px_rgba(0,0,0,0.15)] p-4 sm:p-5 transition-all duration-700 transform pointer-events-auto origin-bottom-right ${
           showGreeting ? 'animate-spring-in' : 'opacity-0 scale-90 translate-y-4'
         }`}
       >

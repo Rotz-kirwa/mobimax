@@ -28,12 +28,12 @@ export default function Home() {
       {/* Trust Badges - Horizontal Strip */}
       <section className="bg-gray-50 border-y border-gray-100 py-10">
         <div className="container mx-auto px-4 max-w-7xl">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8">
             <div className="flex items-center gap-4">
                <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-brand-green shadow-sm border border-gray-100">
                   <ShieldCheck size={24} />
                </div>
-               <div className="flex flex-col">
+               <div className="flex flex-col min-w-0">
                   <span className="text-xs font-black uppercase text-gray-900 tracking-wider">100% Genuine</span>
                   <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tight">Authentic Brands</span>
                </div>
@@ -42,7 +42,7 @@ export default function Home() {
                <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-brand-green shadow-sm border border-gray-100">
                   <Truck size={24} />
                </div>
-               <div className="flex flex-col">
+               <div className="flex flex-col min-w-0">
                   <span className="text-xs font-black uppercase text-gray-900 tracking-wider">Fast Delivery</span>
                   <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tight">Nationwide Shipping</span>
                </div>
@@ -51,7 +51,7 @@ export default function Home() {
                <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-brand-green shadow-sm border border-gray-100">
                   <RotateCcw size={24} />
                </div>
-               <div className="flex flex-col">
+               <div className="flex flex-col min-w-0">
                   <span className="text-xs font-black uppercase text-gray-900 tracking-wider">7 Days Return</span>
                   <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tight">Easy Returns Policy</span>
                </div>
@@ -60,7 +60,7 @@ export default function Home() {
                <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-brand-green shadow-sm border border-gray-100">
                   <Support size={24} />
                </div>
-               <div className="flex flex-col">
+               <div className="flex flex-col min-w-0">
                   <span className="text-xs font-black uppercase text-gray-900 tracking-wider">Pro Support</span>
                   <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tight">Online 24/7 Chat</span>
                </div>
@@ -91,7 +91,7 @@ export default function Home() {
                  <div className="w-12 h-0.5 bg-brand-green"></div>
                  <span className="text-[10px] font-black text-brand-green uppercase tracking-[0.3em]">Extreme Savings</span>
                </div>
-               <h2 className="text-4xl md:text-6xl font-black text-gray-900 tracking-tighter leading-none mb-4 uppercase">
+               <h2 className="text-3xl sm:text-4xl md:text-6xl font-black text-gray-900 tracking-tighter leading-none mb-4 uppercase">
                  Hot Deals <span className="text-brand">🔥</span>
                </h2>
                <p className="text-gray-400 font-bold text-sm uppercase tracking-wide">Limited time offers. Huge discounts on premium tech.</p>
@@ -114,7 +114,7 @@ export default function Home() {
          <div className="container mx-auto px-4 max-w-7xl">
             <div className="text-center mb-16">
                <span className="text-[10px] font-black text-brand-green uppercase tracking-[0.4em] mb-4 block">Broswe the Mall</span>
-               <h2 className="text-4xl font-black text-gray-900 uppercase tracking-tighter">Shop by Category</h2>
+               <h2 className="text-3xl sm:text-4xl font-black text-gray-900 uppercase tracking-tighter">Shop by Category</h2>
             </div>
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -190,7 +190,7 @@ export default function Home() {
           
           <div className="container mx-auto px-4 max-w-7xl relative z-10 text-center">
              <span className="text-[10px] font-black text-brand-green uppercase tracking-[0.5em] mb-4 block">Official Partner</span>
-             <h2 className="text-4xl md:text-6xl font-black leading-none mb-12 tracking-tighter uppercase">Authentic Experience</h2>
+             <h2 className="text-3xl sm:text-4xl md:text-6xl font-black leading-none mb-12 tracking-tighter uppercase">Authentic Experience</h2>
              
              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-12 items-center justify-center">
                 {['Samsung', 'Apple', 'Google', 'Oraimo', 'Xiaomi', 'Oppo', 'Sony', 'JBL'].map((b, idx) => (

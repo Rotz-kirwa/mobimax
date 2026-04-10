@@ -19,7 +19,7 @@ export default function ProductDetails() {
   if (!product) {
     return (
       <div className="container mx-auto px-4 max-w-7xl py-40 text-center">
-        <h1 className="text-4xl font-black text-gray-900 mb-4">Item Not Found</h1>
+        <h1 className="text-3xl sm:text-4xl font-black text-gray-900 mb-4">Item Not Found</h1>
         <p className="text-gray-500 mb-8 font-bold uppercase tracking-widest">The product has been removed or the link is broken.</p>
         <Link to="/shop" className="bg-brand-green text-white px-10 py-5 rounded-3xl font-black text-xs uppercase tracking-widest hover:shadow-xl transition-all">Back to Store</Link>
       </div>
@@ -115,7 +115,7 @@ export default function ProductDetails() {
           <div className="w-full lg:w-[45%]">
             <div className="mb-10">
                <span className="text-[11px] font-black text-brand-green uppercase tracking-[0.4em] mb-4 block">{product.brand}</span>
-               <h1 className="text-4xl md:text-5xl font-black text-gray-900 leading-none mb-6 tracking-tighter uppercase">
+               <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 leading-none mb-6 tracking-tighter uppercase">
                  {product.name}
                </h1>
                
@@ -289,7 +289,7 @@ export default function ProductDetails() {
             <div className="flex items-center justify-between mb-16 px-4">
                <div>
                  <span className="text-[10px] font-black text-brand-green uppercase tracking-[0.4em] mb-4 block">Store Recommendations</span>
-                 <h2 className="text-3xl md:text-5xl font-black text-gray-900 uppercase tracking-tighter">You Might Also Adore</h2>
+                 <h2 className="text-2xl sm:text-3xl md:text-5xl font-black text-gray-900 uppercase tracking-tighter">You Might Also Adore</h2>
                </div>
                <Link to="/shop" className="w-14 h-14 rounded-full border border-gray-100 flex items-center justify-center text-gray-900 hover:bg-brand-green hover:text-white transition-all shadow-sm">
                   <ArrowRight size={24} />
