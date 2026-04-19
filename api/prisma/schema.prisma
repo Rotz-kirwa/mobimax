@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id             String   @id @default(cuid())
+  name           String
+  sku            String   @unique
+  slug           String   @unique
+  price          Float
+  oldPrice       Float?
+  brand          String
+  category       String
+  subcategory    String?
+  description    String
+  specs          Json?
+  image          String
+  stockQuantity  Int      @default(0)
+  status         String   @default("published") // published, low_stock, out_of_stock
+  isHotDeal      Boolean  @default(false)
+  isFeatured     Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([category])
+  @@index([brand])
+}
+
+model Category {
+  id            String   @id @default(cuid())
+  name          String   @unique
+  icon          String
+  subcategories String[]
+}
+
+model Brand {
+  id   String @id @default(cuid())
+  name String @unique
+}
+
+model Order {
+  id             String   @id @default(cuid())
+  reference      String   @unique
+  customer       Json
+  items          Json
+  total          Float
+  paymentStatus  String   @default("pending")
+  orderStatus    String   @default("pending")
+  createdAt      DateTime @default(now())
+}
+
+model HeroBanner {
+  id         String @id @default(cuid())
+  title      String
+  subtitle   String
+  image      String
+  buttonText String
+  buttonLink String
+  order      Int    @default(0)
+}
+
+model Admin {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@mobiplus/shared",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./index.ts",
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "zod": "^4.3.6"
+  },
+  "scripts": {
+    "build": "echo 'No build step for shared'"
+  }
+}
