@@ -8,15 +8,8 @@ import {
   RotateCcw,
   Headphones,
   ChevronRight,
-  ChevronDown,
-  Smartphone,
   Laptop,
-  Watch,
-  Gamepad2,
-  Camera,
   Plug,
-  Tablet,
-  BatteryCharging,
   Heart,
 } from 'lucide-react';
 import ProductCard from '../components/ui/ProductCard';
@@ -91,7 +84,7 @@ function HeroSlider() {
 function CardSkeleton() {
   return (
     <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden animate-pulse">
-      <div className="h-60 bg-slate-100" />
+      <div className="h-44 sm:h-56 bg-slate-100" />
       <div className="p-3.5 space-y-2">
         <div className="h-3 w-16 bg-slate-100 rounded" />
         <div className="h-4 w-full bg-slate-100 rounded" />
@@ -1066,7 +1059,7 @@ function XiaomiDealCard({ product }: { product: Product }) {
   const unavailable = !product.price || product.status === 'out_of_stock';
 
   return (
-    <div className="bg-white border border-slate-200 rounded-lg p-5 flex flex-col gap-3 group hover:shadow-xl transition-all duration-300">
+    <div className="bg-white border border-slate-200 rounded-lg p-3 sm:p-5 flex flex-col gap-2 sm:gap-3 group hover:shadow-xl transition-all duration-300">
       <Link to={`/product/${product.id}`} state={{ product }} className="relative aspect-square mb-2 block">
         {discount > 0 && (
           <div className="absolute top-0 left-0 flex flex-col gap-1 z-10">
@@ -1114,7 +1107,7 @@ function XiaomiDealCard({ product }: { product: Product }) {
       <button
         onClick={() => navigate(`/product/${product.id}`, { state: { product } })}
         disabled={unavailable}
-        className="mt-4 w-full py-2.5 border border-brand-green text-slate-900 text-[12px] font-bold rounded bg-white hover:bg-brand-green hover:text-white transition-all uppercase tracking-wide disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-slate-900"
+        className="mt-2 sm:mt-4 w-full py-2 sm:py-2.5 border border-brand-green text-slate-900 text-[11px] sm:text-[12px] font-bold rounded bg-white hover:bg-brand-green hover:text-white transition-all uppercase tracking-wide disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-slate-900"
       >
         {unavailable ? 'Out of Stock' : 'Buy Now'}
       </button>
@@ -1250,14 +1243,14 @@ export default function Home() {
       <section className="py-12 bg-white">
         <div className="container mx-auto max-w-7xl px-4">
           <SectionHeading title="Shop by Category" accent="green" />
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {CATEGORY_GROUPS.map((group) => (
               <div
                 key={group.title}
-                className="group bg-slate-50 rounded-2xl p-6 flex items-start gap-4 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 overflow-hidden"
+                className="group bg-slate-50 rounded-2xl p-4 sm:p-6 flex items-start gap-4 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 overflow-hidden"
               >
                 {/* Left side: Image */}
-                <div className="w-2/5 flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+                <div className="w-2/5 sm:w-2/5 flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
                   <img
                     src={group.image}
                     alt={group.title}
@@ -1297,13 +1290,13 @@ export default function Home() {
       {/* ══ Xiaomi Deals Section ═════════════════════════════ */}
       <section className="py-12 bg-white">
         <div className="container mx-auto max-w-7xl px-4">
-          <div className="flex items-center justify-between mb-8 border-b-2 border-brand-green/30 pb-3">
-            <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Xiaomi Deals</h2>
-            <Link to="/shop?brand=xiaomi" className="text-[13px] font-semibold text-slate-500 hover:text-brand-green transition-colors">
-              View all Xiaomi <ChevronRight size={14} className="inline" />
+          <div className="flex items-center justify-between mb-5 sm:mb-8 border-b-2 border-brand-green/30 pb-3">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">Xiaomi Deals</h2>
+            <Link to="/shop?brand=xiaomi" className="text-[12px] sm:text-[13px] font-semibold text-slate-500 hover:text-brand-green transition-colors shrink-0 ml-2">
+              View all <ChevronRight size={13} className="inline" />
             </Link>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
             {XIAOMI_DEALS.map((product) => (
               <XiaomiDealCard key={product.id} product={product} />
             ))}
@@ -1314,13 +1307,13 @@ export default function Home() {
       {/* ══ Oppo Deals Section ═══════════════════════════════ */}
       <section className="py-12 bg-white border-t border-slate-100">
         <div className="container mx-auto max-w-7xl px-4">
-          <div className="flex items-center justify-between mb-8 border-b-2 border-brand-green/30 pb-3">
-            <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Oppo Deals</h2>
-            <Link to="/shop?brand=oppo" className="text-[13px] font-semibold text-slate-500 hover:text-brand-green transition-colors">
-              View all Oppo <ChevronRight size={14} className="inline" />
+          <div className="flex items-center justify-between mb-5 sm:mb-8 border-b-2 border-brand-green/30 pb-3">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">Oppo Deals</h2>
+            <Link to="/shop?brand=oppo" className="text-[12px] sm:text-[13px] font-semibold text-slate-500 hover:text-brand-green transition-colors shrink-0 ml-2">
+              View all <ChevronRight size={13} className="inline" />
             </Link>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
             {OPPO_DEALS.map((product) => (
               <XiaomiDealCard key={product.id} product={product} />
             ))}
@@ -1331,13 +1324,13 @@ export default function Home() {
       {/* ══ Infinix Deals Section ════════════════════════════ */}
       <section className="py-12 bg-white border-t border-slate-100">
         <div className="container mx-auto max-w-7xl px-4">
-          <div className="flex items-center justify-between mb-8 border-b-2 border-brand-green/30 pb-3">
-            <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Infinix Deals</h2>
-            <Link to="/shop?brand=infinix" className="text-[13px] font-semibold text-slate-500 hover:text-brand-green transition-colors">
-              View all Infinix <ChevronRight size={14} className="inline" />
+          <div className="flex items-center justify-between mb-5 sm:mb-8 border-b-2 border-brand-green/30 pb-3">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">Infinix Deals</h2>
+            <Link to="/shop?brand=infinix" className="text-[12px] sm:text-[13px] font-semibold text-slate-500 hover:text-brand-green transition-colors shrink-0 ml-2">
+              View all <ChevronRight size={13} className="inline" />
             </Link>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
             {INFINIX_DEALS.map((product) => (
               <XiaomiDealCard key={product.id} product={product} />
             ))}
@@ -1348,13 +1341,13 @@ export default function Home() {
       {/* ══ Nothing Deals Section ═════════════════════════════ */}
       <section className="py-12 bg-white border-t border-slate-100">
         <div className="container mx-auto max-w-7xl px-4">
-          <div className="flex items-center justify-between mb-8 border-b-2 border-brand-green/30 pb-3">
-            <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Nothing Deals</h2>
-            <Link to="/shop?brand=nothing" className="text-[13px] font-semibold text-slate-500 hover:text-brand-green transition-colors">
-              View all Nothing <ChevronRight size={14} className="inline" />
+          <div className="flex items-center justify-between mb-5 sm:mb-8 border-b-2 border-brand-green/30 pb-3">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">Nothing Deals</h2>
+            <Link to="/shop?brand=nothing" className="text-[12px] sm:text-[13px] font-semibold text-slate-500 hover:text-brand-green transition-colors shrink-0 ml-2">
+              View all <ChevronRight size={13} className="inline" />
             </Link>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
             {NOTHING_DEALS.map((product) => (
               <XiaomiDealCard key={product.id} product={product} />
             ))}
@@ -1573,7 +1566,7 @@ export default function Home() {
           <p className="text-brand-green text-[11px] font-bold uppercase tracking-[0.4em] mb-4">
             Official Partner
           </p>
-          <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tight text-white mb-12 leading-none">
+          <h2 className="text-3xl sm:text-4xl md:text-6xl font-black uppercase tracking-tight text-white mb-8 sm:mb-12 leading-none">
             Authentic Experience
           </h2>
 
@@ -1600,7 +1593,7 @@ export default function Home() {
               { value: '99%', label: 'Customer Satisfaction', color: 'text-white' },
             ].map((stat) => (
               <div key={stat.label} className="flex flex-col items-center gap-2">
-                <span className={`text-5xl md:text-6xl font-black tracking-tight ${stat.color}`}>
+                <span className={`text-4xl sm:text-5xl md:text-6xl font-black tracking-tight ${stat.color}`}>
                   {stat.value}
                 </span>
                 <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-slate-500">

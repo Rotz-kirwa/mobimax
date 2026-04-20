@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Heart, ShoppingCart, Trash2, LayoutGrid, ArrowRight } from 'lucide-react';
+import { Heart, ShoppingCart, Trash2, ArrowRight } from 'lucide-react';
 import { useStore } from '../store/useStore';
 import ProductCard from '../components/ui/ProductCard';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -13,13 +13,13 @@ export default function Wishlist() {
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-[48px] p-20 shadow-2xl shadow-brand-green/10 border border-slate-100 flex flex-col items-center"
+          className="bg-white rounded-[32px] sm:rounded-[48px] p-8 sm:p-20 shadow-2xl shadow-brand-green/10 border border-slate-100 flex flex-col items-center"
         >
           <div className="w-24 h-24 mx-auto mb-10 rounded-3xl bg-slate-50 text-slate-300 flex items-center justify-center">
             <Heart size={48} />
           </div>
-          <h1 className="text-4xl font-black text-slate-900 uppercase tracking-tighter mb-4 italic">Vault Empty</h1>
-          <p className="text-sm text-slate-500 font-bold uppercase tracking-[0.3em] mb-12 max-w-sm leading-relaxed">
+          <h1 className="text-3xl sm:text-4xl font-black text-slate-900 uppercase tracking-tighter mb-4 italic">Vault Empty</h1>
+          <p className="text-sm text-slate-500 font-bold uppercase tracking-[0.3em] mb-8 sm:mb-12 max-w-sm leading-relaxed">
             Your interest markers are currently void. Curate your collection from our catalog.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
@@ -37,14 +37,14 @@ export default function Wishlist() {
 
   return (
     <div className="bg-slate-50 min-h-screen pb-24 font-sans">
-      <div className="bg-white border-b border-slate-100 py-12">
-        <div className="container mx-auto px-4 max-w-7xl flex flex-col md:flex-row items-start md:items-end justify-between gap-10">
+      <div className="bg-white border-b border-slate-100 py-8 md:py-12">
+        <div className="container mx-auto px-4 max-w-7xl flex flex-col md:flex-row items-start md:items-end justify-between gap-6 md:gap-10">
           <div>
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-1 bg-brand-green rounded-full"></div>
               <span className="text-[10px] font-black text-brand-green uppercase tracking-[0.4em]">Personal Collection</span>
             </div>
-            <h1 className="text-4xl sm:text-6xl font-black text-slate-900 tracking-tight uppercase leading-none italic">
+            <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight uppercase leading-none italic">
               The Wishlist
             </h1>
           </div>
@@ -64,8 +64,8 @@ export default function Wishlist() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 max-w-7xl mt-16">
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-12">
+      <div className="container mx-auto px-4 max-w-7xl mt-8 md:mt-16">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
           <AnimatePresence>
             {wishlist.map((product: any) => (
               <motion.div 
@@ -91,7 +91,7 @@ export default function Wishlist() {
                   <button
                     type="button"
                     onClick={() => addToCart(product)}
-                    className="flex-1 inline-flex items-center justify-center gap-3 bg-slate-950 text-white px-6 py-5 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:bg-brand-green transition-all shadow-2xl shadow-brand-green/10 active:scale-95 group"
+                    className="flex-1 inline-flex items-center justify-center gap-2 bg-slate-950 text-white px-4 py-4 sm:px-6 sm:py-5 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:bg-brand-green transition-all shadow-2xl shadow-brand-green/10 active:scale-95 group"
                   >
                     <ShoppingCart size={18} />
                     Acquire Asset

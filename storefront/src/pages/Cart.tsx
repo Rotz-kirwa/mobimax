@@ -13,8 +13,8 @@ export default function Cart() {
 
   if (cart.length === 0) {
     return (
-      <div className="container mx-auto px-4 max-w-2xl py-32 text-center font-sans">
-        <div className="bg-white rounded-3xl p-16 shadow-sm border border-slate-100 flex flex-col items-center">
+      <div className="container mx-auto px-4 max-w-2xl py-16 sm:py-32 text-center font-sans">
+        <div className="bg-white rounded-3xl p-8 sm:p-16 shadow-sm border border-slate-100 flex flex-col items-center">
           <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center text-slate-300 mb-8">
             <Package size={40} />
           </div>
@@ -59,9 +59,9 @@ export default function Cart() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, x: 30 }}
-                  className="bg-white rounded-2xl border border-slate-100 p-5 flex gap-5 items-center"
+                  className="bg-white rounded-2xl border border-slate-100 p-4 flex gap-3 sm:gap-5 items-start sm:items-center"
                 >
-                  <Link to={`/product/${item.id}`} className="w-24 h-24 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0 p-2">
+                  <Link to={`/product/${item.id}`} className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0 p-2">
                     <img src={item.image} alt={item.name} className="w-full h-full object-contain" />
                   </Link>
 
@@ -70,10 +70,32 @@ export default function Cart() {
                     <Link to={`/product/${item.id}`} className="text-sm font-semibold text-slate-800 hover:text-brand-green transition-colors line-clamp-2">
                       {item.name}
                     </Link>
-                    <p className="text-base font-bold text-slate-900 mt-1">KSh {item.price.toLocaleString()}</p>
+                    <p className="text-[15px] font-bold text-slate-900 mt-1">KSh {item.price.toLocaleString()}</p>
+
+                    {/* Controls row — inline on mobile */}
+                    <div className="flex items-center justify-between mt-2 sm:hidden">
+                      <div className="flex items-center border border-slate-200 rounded-lg overflow-hidden">
+                        <button
+                          className="w-8 h-8 flex items-center justify-center text-slate-600 hover:bg-slate-50 font-bold transition-colors"
+                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                        >−</button>
+                        <span className="w-8 text-center text-sm font-semibold text-slate-800">{item.quantity}</span>
+                        <button
+                          className="w-8 h-8 flex items-center justify-center text-slate-600 hover:bg-slate-50 font-bold transition-colors"
+                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                        >+</button>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <p className="text-sm font-bold text-slate-900">KSh {(item.price * item.quantity).toLocaleString()}</p>
+                        <button onClick={() => removeFromCart(item.id)} className="text-slate-300 hover:text-red-500 transition-colors p-1">
+                          <Trash2 size={15} />
+                        </button>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="flex flex-col items-end gap-3 shrink-0">
+                  {/* Desktop controls */}
+                  <div className="hidden sm:flex flex-col items-end gap-3 shrink-0">
                     <button onClick={() => removeFromCart(item.id)} className="text-slate-300 hover:text-red-500 transition-colors">
                       <Trash2 size={16} />
                     </button>

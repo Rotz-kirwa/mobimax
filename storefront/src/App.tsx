@@ -1,5 +1,11 @@
-import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
-import { lazy, Suspense } from 'react';
+import { BrowserRouter, Routes, Route, Outlet, useLocation } from 'react-router-dom';
+import { lazy, Suspense, useEffect } from 'react';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
 import Header from './components/layout/Header';
 import AppFooter from './components/layout/AppFooter';
 import WhatsAppFloat from './components/ui/WhatsAppFloat';
@@ -66,6 +72,7 @@ function RootLayout() {
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<RootLayout />}>
           <Route index element={<Home />} />

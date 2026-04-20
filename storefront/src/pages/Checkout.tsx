@@ -226,9 +226,9 @@ export default function Checkout() {
             </Link>
             <h1 className="text-lg font-bold text-slate-900">Checkout</h1>
             {/* Step indicator */}
-            <div className="flex items-center gap-2 text-sm">
+            <div className="flex items-center gap-1.5 text-[12px] sm:text-sm shrink-0">
               <span className={clsx('font-semibold', step === 1 ? 'text-brand-green' : 'text-slate-400')}>1. Details</span>
-              <span className="text-slate-200">›</span>
+              <span className="text-slate-300">›</span>
               <span className={clsx('font-semibold', step === 2 ? 'text-brand-green' : 'text-slate-400')}>2. Payment</span>
             </div>
           </div>
@@ -336,15 +336,15 @@ export default function Checkout() {
                 </h3>
                 <div className="space-y-2">
                   {DELIVERY_OPTIONS.map((opt) => (
-                    <label key={opt.id} className={clsx('flex items-center justify-between p-4 rounded-xl border cursor-pointer transition-all', deliveryOption === opt.id ? 'border-brand-green bg-emerald-50/50' : 'border-slate-200 hover:border-slate-300')}>
-                      <div className="flex items-center gap-3">
-                        <input type="radio" name="delivery" value={opt.id} checked={deliveryOption === opt.id} onChange={() => setDeliveryOption(opt.id)} className="accent-brand-green" />
-                        <div>
+                    <label key={opt.id} className={clsx('flex items-center justify-between gap-3 p-3 sm:p-4 rounded-xl border cursor-pointer transition-all', deliveryOption === opt.id ? 'border-brand-green bg-emerald-50/50' : 'border-slate-200 hover:border-slate-300')}>
+                      <div className="flex items-center gap-3 min-w-0">
+                        <input type="radio" name="delivery" value={opt.id} checked={deliveryOption === opt.id} onChange={() => setDeliveryOption(opt.id)} className="accent-brand-green shrink-0" />
+                        <div className="min-w-0">
                           <p className="text-sm font-semibold text-slate-900">{opt.label}</p>
-                          <p className="text-xs text-slate-500">{opt.desc}</p>
+                          <p className="text-xs text-slate-500 leading-snug">{opt.desc}</p>
                         </div>
                       </div>
-                      <span className="text-sm font-bold text-slate-900">
+                      <span className="text-sm font-bold text-slate-900 shrink-0">
                         {opt.fee === 0 ? 'Free' : `KSh ${opt.fee.toLocaleString()}`}
                       </span>
                     </label>

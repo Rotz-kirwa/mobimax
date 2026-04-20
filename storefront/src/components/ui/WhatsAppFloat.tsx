@@ -32,7 +32,7 @@ export default function WhatsAppFloat() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.92 }}
             transition={{ type: 'spring', damping: 22, stiffness: 320 }}
-            className="pointer-events-auto bg-white rounded-2xl shadow-2xl w-72 overflow-hidden border border-slate-100"
+            className="pointer-events-auto bg-white rounded-2xl shadow-2xl w-[min(288px,calc(100vw-40px))] overflow-hidden border border-slate-100"
             style={{ boxShadow: '0 8px 40px 0 rgba(37,211,102,0.15), 0 2px 16px 0 rgba(0,0,0,0.10)' }}
           >
             {/* Header */}

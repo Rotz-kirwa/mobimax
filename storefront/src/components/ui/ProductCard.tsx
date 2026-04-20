@@ -61,7 +61,7 @@ export default function ProductCard({ product, className, priority = false }: Pr
       {/* ── Image area ── */}
       <div className="relative bg-slate-50/50 overflow-hidden">
         <Link to={`/product/${product.id}`} className="block">
-          <div className="h-60 flex items-center justify-center p-2">
+          <div className="h-44 sm:h-56 flex items-center justify-center p-2">
             <img
               src={toWebP(product.image || FALLBACK_IMAGE)}
               alt={product.name}

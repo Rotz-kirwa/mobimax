@@ -163,7 +163,7 @@ export default function ProductDetails() {
             <div className="lg:sticky lg:top-24">
               {/* Main image */}
               <div className="relative bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden">
-                <div className="aspect-square flex items-center justify-center p-10">
+                <div className="aspect-square flex items-center justify-center p-4 sm:p-10">
                   <AnimatePresence mode="wait">
                     <motion.img
                       key={product.image}
@@ -390,7 +390,7 @@ export default function ProductDetails() {
             )}
 
             {/* Trust badges */}
-            <div className="grid grid-cols-3 gap-3 pt-5 border-t border-slate-100">
+            <div className="grid grid-cols-3 gap-2 pt-5 border-t border-slate-100">
               {[
                 { icon: Truck, title: 'Fast Delivery', desc: 'Nairobi same day' },
                 { icon: Shield, title: 'Warranty', desc: 'Manufacturer included' },
@@ -434,9 +434,9 @@ export default function ProductDetails() {
           </div>
 
           {/* Tab content */}
-          <div className="py-10 max-w-4xl">
+          <div className="py-6 md:py-10 max-w-4xl">
             {activeTab === 'specs' && (
-              <div className="grid grid-cols-2 gap-x-8 md:gap-x-12">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 md:gap-x-12">
                 <div className="flex items-center justify-between py-3 border-b border-slate-200">
                   <span className="text-[12px] font-semibold text-slate-400 uppercase tracking-wide">SKU</span>
                   <span className="text-sm font-semibold text-slate-900">{product.sku}</span>
@@ -485,7 +485,7 @@ export default function ProductDetails() {
             )}
 
             {activeTab === 'delivery' && (
-              <div className="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
                 {[
                   {
                     icon: Truck,

@@ -279,10 +279,11 @@ export default function Header() {
       <div className="bg-slate-900 text-white">
         <div className="container mx-auto max-w-7xl px-4">
           <div className="flex items-center justify-between py-2 text-[11px]">
-            <div className="flex items-center gap-6">
-              <span className="flex items-center gap-1.5 text-brand-green font-semibold">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-green animate-pulse" />
-                Free delivery in Nairobi on orders over KSh 5,000
+            <div className="flex items-center gap-4 min-w-0">
+              <span className="flex items-center gap-1.5 text-brand-green font-semibold shrink-0 sm:whitespace-nowrap">
+                <span className="w-1.5 h-1.5 rounded-full bg-brand-green animate-pulse shrink-0" />
+                <span className="hidden xs:inline">Free delivery in Nairobi on orders over KSh 5,000</span>
+                <span className="xs:hidden">Free Nairobi delivery over KSh 5K</span>
               </span>
               <span className="hidden md:flex items-center gap-1.5 text-slate-400">
                 <MapPin size={11} />
@@ -324,7 +325,7 @@ export default function Header() {
               <img 
                 src="/logo_primary.png" 
                 alt="Mobimax" 
-                className="h-20 md:h-28 lg:h-36 w-auto object-contain -ml-4"
+                className="h-14 md:h-24 lg:h-32 w-auto object-contain -ml-2 md:-ml-4"
               />
             </Link>
 

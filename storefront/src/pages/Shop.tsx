@@ -28,7 +28,7 @@ const SORT_OPTIONS = [
 function CardSkeleton() {
   return (
     <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden animate-pulse">
-      <div className="h-48 bg-slate-100" />
+      <div className="h-44 sm:h-56 bg-slate-100" />
       <div className="p-3.5 space-y-2">
         <div className="h-3 w-16 bg-slate-100 rounded" />
         <div className="h-4 w-full bg-slate-100 rounded" />
@@ -274,7 +274,7 @@ export default function Shop() {
         (p) =>
           p.name.toLowerCase().includes(searchQuery) ||
           p.brand.toLowerCase().includes(searchQuery) ||
-          p.description.toLowerCase().includes(searchQuery)
+          (p.description ?? '').toLowerCase().includes(searchQuery)
       );
     if (activeCategory) result = result.filter((p) => p.category === activeCategory);
     if (activeBrand)
@@ -399,30 +399,28 @@ export default function Shop() {
           {/* ── Main content ── */}
           <div className="flex-1 min-w-0">
             {/* Sort bar */}
-            <div className="flex items-center justify-between mb-5 bg-white border border-slate-200 rounded-xl px-4 py-3">
-              <div className="flex items-center gap-1.5 text-[12px] font-medium text-slate-500">
+            <div className="flex items-center justify-between mb-5 bg-white border border-slate-200 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 gap-2 overflow-hidden">
+              <div className="flex items-center gap-1.5 text-[12px] font-medium text-slate-500 shrink-0">
                 <ArrowUpDown size={13} />
-                {isLoading ? 'Loading…' : `${filteredProducts.length} results`}
+                <span className="hidden sm:inline">{isLoading ? 'Loading…' : `${filteredProducts.length} results`}</span>
+                <span className="sm:hidden">{isLoading ? '…' : filteredProducts.length}</span>
               </div>
-              <div className="flex items-center gap-1.5">
-                <span className="text-[12px] text-slate-400 hidden sm:block">Sort:</span>
-                <div className="flex gap-1">
-                  {SORT_OPTIONS.map((opt) => (
-                    <button
-                      key={opt.value}
-                      type="button"
-                      onClick={() => updateParam('sort', opt.value === 'recommended' ? null : opt.value)}
-                      className={clsx(
-                        'px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-all',
-                        sortBy === opt.value
-                          ? 'bg-slate-900 text-white'
-                          : 'text-slate-500 hover:bg-slate-100 hover:text-slate-900'
-                      )}
-                    >
-                      {opt.label}
-                    </button>
-                  ))}
-                </div>
+              <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide">
+                {SORT_OPTIONS.map((opt) => (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => updateParam('sort', opt.value === 'recommended' ? null : opt.value)}
+                    className={clsx(
+                      'shrink-0 px-2.5 sm:px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-all whitespace-nowrap',
+                      sortBy === opt.value
+                        ? 'bg-slate-900 text-white'
+                        : 'text-slate-500 hover:bg-slate-100 hover:text-slate-900'
+                    )}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
               </div>
             </div>
 
