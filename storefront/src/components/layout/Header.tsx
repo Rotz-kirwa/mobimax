@@ -623,7 +623,7 @@ export default function Header() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-40 bg-slate-900/50 backdrop-blur-sm md:hidden"
+              className="fixed inset-0 z-40 bg-black/60 md:hidden"
               onClick={() => setMobileOpen(false)}
             />
 
@@ -634,139 +634,72 @@ export default function Header() {
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 28, stiffness: 300 }}
-              className="fixed left-0 top-0 bottom-0 z-50 w-[82%] max-w-sm bg-white shadow-2xl overflow-y-auto md:hidden"
+              className="fixed left-0 top-0 bottom-0 z-50 w-[85%] max-w-xs bg-white shadow-2xl overflow-y-auto md:hidden flex flex-col"
             >
-              {/* Drawer header */}
-              <div className="flex items-center justify-between p-4 border-b border-slate-100">
-                <Link
-                  to="/"
-                  onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-2"
-                >
-                  <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center">
-                    <span className="text-white font-black text-sm">M</span>
-                  </div>
-                  <span className="font-black text-slate-900 tracking-tight">Mobimax</span>
-                </Link>
+              {/* ── Header bar — dark, like PPK ── */}
+              <div className="flex items-center justify-between bg-slate-900 px-4 py-3.5 shrink-0">
+                <div className="flex items-center gap-2 text-white">
+                  <Menu size={18} />
+                  <span className="text-[13px] font-black uppercase tracking-widest">Menu</span>
+                </div>
                 <button
                   type="button"
                   onClick={() => setMobileOpen(false)}
-                  className="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-100 text-slate-600"
+                  className="text-white/70 hover:text-white transition-colors"
+                  aria-label="Close menu"
                 >
-                  <X size={18} />
+                  <X size={20} />
                 </button>
               </div>
 
-              {/* Quick actions */}
-              <div className="grid grid-cols-2 gap-2 p-4 border-b border-slate-100">
-                <Link
-                  to="/wishlist"
-                  onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-2 p-3 bg-slate-50 rounded-xl text-[13px] font-semibold text-slate-700 hover:bg-brand-green/5 hover:text-brand-green transition-colors"
-                >
-                  <Heart size={16} />
-                  Wishlist
-                  {(wishlist as any[]).length > 0 && (
-                    <span className="ml-auto w-5 h-5 bg-rose-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
-                      {(wishlist as any[]).length}
-                    </span>
-                  )}
-                </Link>
-                <Link
-                  to="/deals"
-                  onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-2 p-3 bg-rose-50 rounded-xl text-[13px] font-bold text-rose-600 hover:bg-rose-500 hover:text-white transition-colors"
-                >
-                  <Zap size={16} fill="currentColor" />
-                  Hot Deals
-                </Link>
-              </div>
-
-              {/* Featured Navigation (Mobile) */}
-              <div className="p-4 border-b border-slate-100 flex flex-wrap gap-2">
+              {/* ── Nav links — hierarchical list ── */}
+              <div className="flex-1 overflow-y-auto">
                 {NAV_LINKS.map((link) => (
-                  <Link
-                    key={link.label}
-                    to={link.to}
-                    onClick={() => setMobileOpen(false)}
-                    className={clsx(
-                      'px-3 py-1.5 rounded-lg text-[11px] font-bold border transition-colors',
-                      link.color
-                        ? 'bg-brand-green/5 border-brand-green/30 text-brand-green'
-                        : 'bg-white border-slate-200 text-slate-700'
-                    )}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
+                  <div key={link.label}>
+                    {/* Parent category */}
+                    <div className="flex items-center justify-between border-b border-slate-100">
+                      <Link
+                        to={link.to}
+                        onClick={() => setMobileOpen(false)}
+                        className="flex-1 px-4 py-3.5 text-[14px] font-bold text-slate-900 hover:text-brand-green transition-colors"
+                      >
+                        {link.label}
+                      </Link>
+                      {link.children && (
+                        <button
+                          type="button"
+                          onClick={() => setMobileExpanded((v) => (v === link.label ? null : link.label))}
+                          className="px-3 py-3.5 text-slate-400 hover:text-slate-700 border-l border-slate-100"
+                        >
+                          <ChevronDown
+                            size={15}
+                            className={clsx('transition-transform duration-200', mobileExpanded === link.label && 'rotate-180')}
+                          />
+                        </button>
+                      )}
+                    </div>
 
-              {/* Categories */}
-
-              <div className="p-4">
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">
-                  Shop by Category
-                </p>
-                <div className="space-y-0.5">
-                  {categories.map((cat) => {
-                    const Icon = ICON_MAP[cat.id] || Plug;
-                    const hasSubs = cat.subcategories && cat.subcategories.length > 0;
-                    return (
-                      <div key={cat.id}>
-                        <div className="flex items-center">
+                    {/* Sub-items */}
+                    {link.children && mobileExpanded === link.label && (
+                      <div className="bg-slate-50 border-b border-slate-100">
+                        {link.children.map((child: any) => (
                           <Link
-                            to={`/shop?category=${cat.id}`}
+                            key={child.name}
+                            to={child.link}
                             onClick={() => setMobileOpen(false)}
-                            className="flex-1 flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium text-slate-700 hover:bg-brand-green/5 hover:text-brand-green transition-colors"
+                            className="block px-6 py-3 text-[13px] text-slate-600 hover:text-brand-green border-b border-slate-100 last:border-0 transition-colors"
                           >
-                            <Icon size={15} className="text-slate-400" />
-                            {cat.name}
+                            {child.name}
                           </Link>
-                          {hasSubs && (
-                            <button
-                              type="button"
-                              onClick={() =>
-                                setMobileExpanded((v) => (v === cat.id ? null : cat.id))
-                              }
-                              className="p-2 text-slate-400 hover:text-slate-700"
-                            >
-                              <ChevronDown
-                                size={14}
-                                className={clsx(
-                                  'transition-transform',
-                                  mobileExpanded === cat.id && 'rotate-180'
-                                )}
-                              />
-                            </button>
-                          )}
-                        </div>
-
-                        {hasSubs && mobileExpanded === cat.id && (
-                          <div className="ml-10 mt-1 space-y-0.5 border-l-2 border-slate-100 pl-3 pb-1">
-                            {cat.subcategories.map((sub) => (
-                              <Link
-                                key={sub}
-                                to={`/shop?category=${cat.id}&subcategory=${sub}`}
-                                onClick={() => setMobileOpen(false)}
-                                className="block py-2 px-2 text-[12px] font-medium text-slate-500 hover:text-brand-green transition-colors"
-                              >
-                                {sub}
-                              </Link>
-                            ))}
-                          </div>
-                        )}
+                        ))}
                       </div>
-                    );
-                  })}
-                </div>
-              </div>
+                    )}
+                  </div>
+                ))}
 
-              {/* Info links */}
-              <div className="border-t border-slate-100 p-4 space-y-1">
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">
-                  More
-                </p>
+                {/* ── Extra links ── */}
                 {[
+                  { label: 'Hot Deals 🔥', to: '/deals' },
                   { label: 'About Us', to: '/about' },
                   { label: 'Contact', to: '/contact' },
                   { label: 'FAQ', to: '/faq' },
@@ -776,23 +709,20 @@ export default function Header() {
                     key={item.label}
                     to={item.to}
                     onClick={() => setMobileOpen(false)}
-                    className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-[13px] font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors"
+                    className="flex items-center px-4 py-3.5 text-[14px] font-bold text-slate-900 hover:text-brand-green border-b border-slate-100 transition-colors"
                   >
-                    <ChevronRight size={14} className="text-slate-400" />
                     {item.label}
                   </Link>
                 ))}
               </div>
 
-              {/* Contact */}
-              <div className="p-4 bg-slate-50 m-4 rounded-2xl">
+              {/* ── Footer bar — phone number ── */}
+              <div className="shrink-0 bg-slate-900 px-4 py-3 flex items-center gap-2.5">
+                <Phone size={14} className="text-brand-green shrink-0" />
                 <a
                   href="tel:+254797674862"
-                  className="flex items-center gap-2.5 text-[13px] font-semibold text-slate-800 hover:text-brand-green transition-colors"
+                  className="text-[13px] font-bold text-brand-green tracking-wide"
                 >
-                  <div className="w-8 h-8 rounded-lg bg-brand-green/10 flex items-center justify-center">
-                    <Phone size={14} className="text-brand-green" />
-                  </div>
                   +254 797 674862
                 </a>
               </div>
