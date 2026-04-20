@@ -314,7 +314,7 @@ export default function Header() {
         )}
       >
         <div className="container mx-auto max-w-7xl px-4">
-          <div className="flex items-center gap-4 lg:gap-8 py-3 md:py-4">
+          <div className="flex items-center gap-4 lg:gap-8 py-2 md:py-2">
 
             {/* Logo */}
             <Link
@@ -325,7 +325,7 @@ export default function Header() {
               <img 
                 src="/logo_primary.png" 
                 alt="Mobimax" 
-                className="h-20 md:h-24 lg:h-32 w-auto object-contain -ml-2 md:-ml-4"
+                className="h-24 md:h-36 lg:h-48 w-auto object-contain -ml-2 md:-ml-4"
               />
             </Link>
 
