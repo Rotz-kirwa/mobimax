@@ -669,10 +669,15 @@ export default function Header() {
                         <button
                           type="button"
                           onClick={() => setMobileExpanded((v) => (v === link.label ? null : link.label))}
-                          className="px-3 py-3.5 text-slate-400 hover:text-slate-700 border-l border-slate-100"
+                          className={clsx(
+                            'mx-3 my-2 w-8 h-8 rounded-lg flex items-center justify-center border transition-colors shrink-0',
+                            mobileExpanded === link.label
+                              ? 'bg-brand-green border-brand-green text-white'
+                              : 'bg-slate-100 border-slate-200 text-slate-500 hover:bg-brand-green/10 hover:border-brand-green hover:text-brand-green'
+                          )}
                         >
                           <ChevronDown
-                            size={15}
+                            size={16}
                             className={clsx('transition-transform duration-200', mobileExpanded === link.label && 'rotate-180')}
                           />
                         </button>
