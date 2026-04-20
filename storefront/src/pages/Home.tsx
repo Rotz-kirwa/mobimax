@@ -1561,42 +1561,51 @@ export default function Home() {
 
 
       {/* ══ Authentic Experience ═════════════════════════════ */}
-      <section className="bg-[#0d1117] py-16 md:py-20 overflow-hidden">
+      <section className="bg-slate-50 border-t border-slate-100 py-16 md:py-20 overflow-hidden">
         <div className="container mx-auto max-w-7xl px-4 text-center">
           <p className="text-brand-green text-[11px] font-bold uppercase tracking-[0.4em] mb-4">
             Official Partner
           </p>
-          <h2 className="text-3xl sm:text-4xl md:text-6xl font-black uppercase tracking-tight text-white mb-8 sm:mb-12 leading-none">
+          <h2 className="text-3xl sm:text-4xl md:text-6xl font-black uppercase tracking-tight text-slate-900 mb-8 sm:mb-12 leading-none">
             Authentic Experience
           </h2>
 
-          {/* Brand strip */}
-          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 mb-12">
-            {['Samsung', 'Apple', 'Google', 'Oraimo', 'Xiaomi', 'Oppo', 'Sony', 'JBL'].map((brand) => (
+          {/* Brand strip — each brand gets its own colour */}
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 mb-12">
+            {[
+              { name: 'Samsung', color: 'text-blue-600' },
+              { name: 'Apple',   color: 'text-slate-700' },
+              { name: 'Google',  color: 'text-red-500' },
+              { name: 'Oraimo', color: 'text-emerald-600' },
+              { name: 'Xiaomi',  color: 'text-orange-500' },
+              { name: 'Oppo',    color: 'text-teal-600' },
+              { name: 'Sony',    color: 'text-violet-600' },
+              { name: 'JBL',     color: 'text-rose-500' },
+            ].map((brand) => (
               <span
-                key={brand}
-                className="text-slate-600 text-lg md:text-2xl font-black uppercase italic tracking-widest hover:text-slate-400 transition-colors cursor-default"
+                key={brand.name}
+                className={`${brand.color} text-lg md:text-2xl font-black uppercase italic tracking-widest opacity-80 hover:opacity-100 transition-opacity cursor-default`}
               >
-                {brand}
+                {brand.name}
               </span>
             ))}
           </div>
 
-          <div className="border-t border-white/10 mb-12" />
+          <div className="border-t border-slate-200 mb-12" />
 
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { value: '70+', label: 'Premium Brands', color: 'text-brand-green' },
-              { value: '10K+', label: 'Happy Customers', color: 'text-white' },
-              { value: '24H', label: 'Speed Delivery', color: 'text-rose-500' },
-              { value: '99%', label: 'Customer Satisfaction', color: 'text-white' },
+              { value: '70+',  label: 'Premium Brands',       color: 'text-brand-green' },
+              { value: '10K+', label: 'Happy Customers',      color: 'text-blue-600' },
+              { value: '24H',  label: 'Speed Delivery',       color: 'text-rose-500' },
+              { value: '99%',  label: 'Customer Satisfaction', color: 'text-violet-600' },
             ].map((stat) => (
               <div key={stat.label} className="flex flex-col items-center gap-2">
                 <span className={`text-4xl sm:text-5xl md:text-6xl font-black tracking-tight ${stat.color}`}>
                   {stat.value}
                 </span>
-                <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-slate-500">
+                <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-slate-400">
                   {stat.label}
                 </span>
               </div>
