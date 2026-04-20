@@ -325,7 +325,7 @@ export default function Header() {
               <img 
                 src="/logo_primary.png" 
                 alt="Mobimax" 
-                className="h-24 md:h-36 lg:h-48 w-auto object-contain -ml-2 md:-ml-4"
+                className="h-32 md:h-36 lg:h-48 w-auto object-contain -ml-2 md:-ml-4"
               />
             </Link>
 
