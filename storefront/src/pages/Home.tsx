@@ -1149,58 +1149,6 @@ export default function Home() {
       {/* ══ Category icon bar ══════════════════════════════ */}
       <CategoryIconBar />
 
-      {/* ══ USP / Trust strip ══════════════════════════════ */}
-      <section className="bg-white border-b border-slate-100 py-5">
-        <div className="container mx-auto max-w-7xl px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
-            {[
-              {
-                icon: Truck,
-                title: 'Fast Delivery',
-                desc: 'Nairobi same day · Countrywide 24h',
-                color: 'text-brand-green',
-                bg: 'bg-brand-green/10',
-              },
-              {
-                icon: ShieldCheck,
-                title: 'Genuine Products',
-                desc: 'All items 100% authentic',
-                color: 'text-blue-600',
-                bg: 'bg-blue-50',
-              },
-              {
-                icon: RotateCcw,
-                title: '7-Day Returns',
-                desc: 'Easy hassle-free exchange',
-                color: 'text-violet-600',
-                bg: 'bg-violet-50',
-              },
-              {
-                icon: Headphones,
-                title: 'Expert Support',
-                desc: 'Mon–Sat, 8am–8pm',
-                color: 'text-amber-600',
-                bg: 'bg-amber-50',
-              },
-            ].map((item) => (
-              <div key={item.title} className="flex items-center gap-3">
-                <div
-                  className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${item.bg}`}
-                >
-                  <item.icon size={18} className={item.color} strokeWidth={2} />
-                </div>
-                <div>
-                  <p className="text-[13px] font-bold text-slate-900 leading-tight">{item.title}</p>
-                  <p className="text-[11px] text-slate-500 leading-tight hidden sm:block">
-                    {item.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ══ Hot Deals ══════════════════════════════════════ */}
       <section className="py-8 md:py-10 bg-white">
         <div className="container mx-auto max-w-7xl px-4">
