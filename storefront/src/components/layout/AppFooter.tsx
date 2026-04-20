@@ -81,7 +81,7 @@ const SOCIAL_LINKS = [
 function FooterHeading({ children }: { children: React.ReactNode }) {
   return (
     <div className="mb-5">
-      <h3 className="text-[15px] font-extrabold text-white uppercase tracking-wide">{children}</h3>
+      <h3 className="text-[15px] font-extrabold text-slate-800 uppercase tracking-wide">{children}</h3>
       <div className="mt-2 h-[3px] w-8 rounded-full bg-orange-500" />
     </div>
   );
@@ -97,7 +97,7 @@ export default function AppFooter() {
     ? brands.slice(0, 8).map((b) => b.name)
     : BRAND_LINKS;
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (email.trim()) {
       setSubscribed(true);
@@ -106,7 +106,7 @@ export default function AppFooter() {
   };
 
   return (
-    <footer className="font-sans bg-[#111827]">
+    <footer className="font-sans bg-slate-50 border-t border-slate-200">
 
       {/* ── Main footer body ── */}
       <div className="container mx-auto max-w-7xl px-4 py-14">
@@ -118,29 +118,29 @@ export default function AppFooter() {
               <img
                 src="/logo_primary.png"
                 alt="Mobimax"
-                className="h-14 w-auto object-contain brightness-0 invert"
+                className="h-14 w-auto object-contain"
               />
             </Link>
 
-            <p className="text-[13px] text-slate-400 leading-relaxed mb-6">
+            <p className="text-[13px] text-slate-500 leading-relaxed mb-6">
               Kenya's trusted electronics destination. Genuine products, competitive prices, and
               exceptional service — in Nairobi and countrywide.
             </p>
 
-            <ul className="space-y-3 mb-7 text-[13px] text-slate-400">
+            <ul className="space-y-3 mb-7 text-[13px] text-slate-500">
               <li className="flex items-start gap-2.5">
                 <MapPin size={14} className="text-orange-500 shrink-0 mt-0.5" />
                 <span>MobiMax Store, CBD Nairobi,<br />Moi Avenue, Ground Floor.</span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone size={14} className="text-orange-500 shrink-0" />
-                <a href="tel:+254797674862" className="hover:text-orange-400 transition-colors">
+                <a href="tel:+254797674862" className="hover:text-orange-500 transition-colors">
                   +254 797 674 862
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail size={14} className="text-orange-500 shrink-0" />
-                <a href="mailto:sales@mobimax.co.ke" className="hover:text-orange-400 transition-colors">
+                <a href="mailto:sales@mobimax.co.ke" className="hover:text-orange-500 transition-colors">
                   sales@mobimax.co.ke
                 </a>
               </li>
@@ -155,7 +155,7 @@ export default function AppFooter() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="w-9 h-9 rounded-full border border-slate-600 hover:border-orange-500 hover:bg-orange-500 flex items-center justify-center text-slate-400 hover:text-white transition-all duration-200"
+                  className="w-9 h-9 rounded-full border border-slate-200 hover:border-orange-500 hover:bg-orange-500 flex items-center justify-center text-slate-500 hover:text-white transition-all duration-200"
                 >
                   <s.icon />
                 </a>
@@ -171,7 +171,7 @@ export default function AppFooter() {
                 <li key={item.label}>
                   <Link
                     to={item.to}
-                    className="group flex items-center gap-1.5 text-[13px] text-slate-400 hover:text-orange-400 transition-colors"
+                    className="group flex items-center gap-1.5 text-[13px] text-slate-500 hover:text-orange-500 transition-colors"
                   >
                     <ChevronRight size={12} className="text-orange-500 opacity-0 group-hover:opacity-100 transition-opacity -ml-1" />
                     {item.label}
@@ -189,7 +189,7 @@ export default function AppFooter() {
                 <li key={item.label}>
                   <Link
                     to={item.to}
-                    className="group flex items-center gap-1.5 text-[13px] text-slate-400 hover:text-orange-400 transition-colors"
+                    className="group flex items-center gap-1.5 text-[13px] text-slate-500 hover:text-orange-500 transition-colors"
                   >
                     <ChevronRight size={12} className="text-orange-500 opacity-0 group-hover:opacity-100 transition-opacity -ml-1" />
                     {item.label}
@@ -204,7 +204,7 @@ export default function AppFooter() {
                 <Link
                   key={brand}
                   to={`/shop?brand=${brand.toLowerCase()}`}
-                  className="text-[12px] text-slate-400 hover:text-orange-400 transition-colors"
+                  className="text-[12px] text-slate-500 hover:text-orange-500 transition-colors"
                 >
                   {brand}
                 </Link>
@@ -215,12 +215,12 @@ export default function AppFooter() {
           {/* Col 4 — Newsletter + Hours */}
           <div>
             <FooterHeading>Newsletter</FooterHeading>
-            <p className="text-[13px] text-slate-400 mb-4 leading-relaxed">
+            <p className="text-[13px] text-slate-500 mb-4 leading-relaxed">
               Get the latest deals, new arrivals and exclusive offers straight to your inbox.
             </p>
 
             {subscribed ? (
-              <div className="bg-orange-500/10 border border-orange-500/30 rounded-xl px-4 py-3 text-[13px] text-orange-400 font-semibold">
+              <div className="bg-orange-50 border border-orange-200 rounded-xl px-4 py-3 text-[13px] text-orange-600 font-semibold">
                 Thanks for subscribing!
               </div>
             ) : (
@@ -231,7 +231,7 @@ export default function AppFooter() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Your email address"
                   required
-                  className="flex-1 min-w-0 bg-[#1f2937] border border-slate-700 focus:border-orange-500 text-slate-200 placeholder-slate-500 text-[13px] px-3.5 py-2.5 rounded-xl outline-none transition-colors"
+                  className="flex-1 min-w-0 bg-white border border-slate-200 focus:border-orange-500 text-slate-800 placeholder-slate-400 text-[13px] px-3.5 py-2.5 rounded-xl outline-none transition-colors"
                 />
                 <button
                   type="submit"
@@ -244,22 +244,22 @@ export default function AppFooter() {
             )}
 
             {/* Store hours */}
-            <div className="mt-8 p-4 rounded-xl bg-[#1f2937] border border-slate-700/50">
-              <p className="text-[12px] font-bold text-white uppercase tracking-wide mb-3">
+            <div className="mt-8 p-4 rounded-xl bg-white border border-slate-200">
+              <p className="text-[12px] font-bold text-slate-800 uppercase tracking-wide mb-3">
                 Store Hours
               </p>
-              <ul className="space-y-1.5 text-[12px] text-slate-400">
+              <ul className="space-y-1.5 text-[12px] text-slate-500">
                 <li className="flex justify-between">
                   <span>Mon – Fri</span>
-                  <span className="text-slate-300 font-medium">8:00 AM – 7:00 PM</span>
+                  <span className="text-slate-700 font-medium">8:00 AM – 7:00 PM</span>
                 </li>
                 <li className="flex justify-between">
                   <span>Saturday</span>
-                  <span className="text-slate-300 font-medium">9:00 AM – 6:00 PM</span>
+                  <span className="text-slate-700 font-medium">9:00 AM – 6:00 PM</span>
                 </li>
                 <li className="flex justify-between">
                   <span>Sunday</span>
-                  <span className="text-slate-300 font-medium">10:00 AM – 4:00 PM</span>
+                  <span className="text-slate-700 font-medium">10:00 AM – 4:00 PM</span>
                 </li>
               </ul>
             </div>
@@ -268,9 +268,9 @@ export default function AppFooter() {
       </div>
 
       {/* ── Payment methods strip ── */}
-      <div className="border-t border-slate-700/60">
+      <div className="border-t border-slate-200">
         <div className="container mx-auto max-w-7xl px-4 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-[12px] text-slate-500 uppercase tracking-widest font-semibold">
+          <p className="text-[12px] text-slate-400 uppercase tracking-widest font-semibold">
             We Accept
           </p>
           <div className="flex flex-wrap items-center gap-3">
@@ -285,28 +285,28 @@ export default function AppFooter() {
             </div>
 
             {/* Mastercard */}
-            <div className="h-[22px] px-2 bg-white rounded flex items-center gap-1">
+            <div className="h-[22px] px-2 bg-white border border-slate-100 rounded flex items-center gap-1">
               <div className="w-5 h-5 rounded-full bg-red-600 opacity-90" />
               <div className="w-5 h-5 rounded-full bg-yellow-400 -ml-2.5 opacity-90" />
             </div>
 
             {/* Bank transfer */}
-            <div className="h-[22px] px-2.5 bg-slate-700 rounded flex items-center">
-              <span className="text-[10px] font-bold text-slate-300 uppercase tracking-wider">Bank Transfer</span>
+            <div className="h-[22px] px-2.5 bg-slate-100 border border-slate-200 rounded flex items-center">
+              <span className="text-[10px] font-bold text-slate-600 uppercase tracking-wider">Bank Transfer</span>
             </div>
 
             {/* Cash on delivery */}
-            <div className="h-[22px] px-2.5 bg-slate-700 rounded flex items-center">
-              <span className="text-[10px] font-bold text-slate-300 uppercase tracking-wider">Cash on Delivery</span>
+            <div className="h-[22px] px-2.5 bg-slate-100 border border-slate-200 rounded flex items-center">
+              <span className="text-[10px] font-bold text-slate-600 uppercase tracking-wider">Cash on Delivery</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* ── Bottom bar ── */}
-      <div className="bg-[#0d1117] border-t border-slate-800 py-4">
+      <div className="bg-white border-t border-slate-200 py-4">
         <div className="container mx-auto max-w-7xl px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <p className="text-[12px] text-slate-500">
+          <p className="text-[12px] text-slate-400">
             &copy; {new Date().getFullYear()}{' '}
             <span className="text-orange-500 font-bold">MobiMax</span>. All Rights Reserved.
           </p>
@@ -319,7 +319,7 @@ export default function AppFooter() {
               <Link
                 key={label}
                 to={href}
-                className="text-[12px] text-slate-500 hover:text-orange-400 transition-colors"
+                className="text-[12px] text-slate-400 hover:text-orange-500 transition-colors"
               >
                 {label}
               </Link>
