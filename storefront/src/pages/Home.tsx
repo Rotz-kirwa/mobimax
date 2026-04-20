@@ -1243,32 +1243,32 @@ export default function Home() {
       <section className="py-12 bg-white">
         <div className="container mx-auto max-w-7xl px-4">
           <SectionHeading title="Shop by Category" accent="green" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
             {CATEGORY_GROUPS.map((group) => (
               <div
                 key={group.title}
-                className="group bg-slate-50 rounded-2xl p-4 sm:p-6 flex items-start gap-4 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 overflow-hidden"
+                className="group bg-slate-50 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
               >
-                {/* Left side: Image */}
-                <div className="w-2/5 sm:w-2/5 flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+                {/* Image — full width on mobile, stacked above content */}
+                <div className="bg-white flex items-center justify-center p-4 sm:p-5 h-36 sm:h-40 group-hover:scale-105 transition-transform duration-500 origin-center">
                   <img
                     src={group.image}
                     alt={group.title}
-                    className="max-h-[120px] w-auto object-contain mix-blend-multiply"
+                    className="max-h-full max-w-full object-contain mix-blend-multiply"
                   />
                 </div>
 
-                {/* Right side: Content */}
-                <div className="w-3/5 flex flex-col gap-3 py-1">
-                  <h3 className="text-lg font-bold text-slate-900 tracking-tight leading-none mb-1">
+                {/* Content */}
+                <div className="p-4 sm:p-5 flex flex-col gap-2">
+                  <h3 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight leading-tight">
                     {group.title}
                   </h3>
-                  <div className="flex flex-col gap-1.5">
+                  <div className="flex flex-col gap-1 sm:gap-1.5">
                     {group.items.map((item) => (
                       <Link
                         key={item.name}
                         to={item.link}
-                        className="text-[13px] text-slate-600 hover:text-brand-green transition-colors"
+                        className="text-[12px] sm:text-[13px] text-slate-600 hover:text-brand-green transition-colors leading-snug"
                       >
                         {item.name}
                       </Link>
@@ -1276,9 +1276,9 @@ export default function Home() {
                   </div>
                   <Link
                     to={group.mainLink}
-                    className="mt-1 text-[13px] font-bold text-brand-green flex items-center gap-1 group-hover:translate-x-1 transition-transform"
+                    className="mt-2 text-[12px] sm:text-[13px] font-bold text-brand-green flex items-center gap-1 group-hover:translate-x-1 transition-transform"
                   >
-                    Shop More <ChevronRight size={14} />
+                    Shop More <ChevronRight size={13} />
                   </Link>
                 </div>
               </div>
