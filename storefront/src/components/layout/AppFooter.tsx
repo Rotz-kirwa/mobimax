@@ -118,7 +118,7 @@ export default function AppFooter() {
               <img
                 src="/logo_primary.png"
                 alt="Mobimax"
-                className="h-14 w-auto object-contain"
+                className="h-20 w-auto object-contain drop-shadow-sm"
               />
             </Link>
 
